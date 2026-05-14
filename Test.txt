@@ -1,3 +1,4 @@
- We have successfully restored the LINCPAM database on the UAT server (full backup), and all Azure MI-related issues are now resolved.
-For further testing, we are planning to proceed with Full + Differential restore in BUAT, instead of waiting for the PROD Azure MI server.
-A request has been raised for the required backups, and once received, we will complete the Full + Diff restore testing and share the update.
+Hi [Team/Name],
+We have already raised a case to collect the required information; however, we are yet to receive a response.
+Request your assistance in expediting this, as the delay is impacting our progress.
+Please let us know if any additional inputs are required from our end.
