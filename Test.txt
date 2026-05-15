@@ -1,4 +1,40 @@
-Hi [Team/Name],
-We have already raised a case to collect the required information; however, we are yet to receive a response.
-Request your assistance in expediting this, as the delay is impacting our progress.
-Please let us know if any additional inputs are required from our end.
+# Folder to scan
+$folderPath = "C:\InputFiles"
+
+# Output file
+$outputFile = "C:\Output\PathExtraction.csv"
+
+# Initialize result array
+$result = @()
+
+# Get all .config and .ini files recursively
+$files = Get-ChildItem -Path $folderPath -Include *.config, *.ini -Recurse -File
+
+foreach ($file in $files) {
+
+    # Read file line by line
+    $lines = Get-Content $file.FullName -ErrorAction SilentlyContinue
+
+    foreach ($line in $lines) {
+
+        # Match any path containing \ or \\ (local or UNC)
+        if ($line -match '(\\\\[^\s"=]+|[A-Za-z]:\\[^\s"=]+)') {
+
+            # Extract all matches
+            $matches = [regex]::Matches($line, '(\\\\[^\s"=]+|[A-Za-z]:\\[^\s"=]+)')
+
+            foreach ($match in $matches) {
+
+                $result += [PSCustomObject]@{
+                    FileName = $file.Name
+                    Path     = $match.Value
+                }
+            }
+        }
+    }
+}
+
+# Export to CSV
+$result | Sort-Object FileName | Export-Csv -Path $outputFile -NoTypeInformation
+
+Write-Host "✅ Extraction completed. Output saved to $outputFile"
