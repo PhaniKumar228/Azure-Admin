@@ -1,0 +1,9 @@
+One‑liner (update both keys)
+
+
+$f="C:\Path\AceDataReview.exe.config";[xml]$x=Get-Content $f;$s=$x.configuration.applicationSettings.ChildNodes|%{$_.setting};($s|? name -eq "Client_Volume").value="NEW_VOLUME";($s|? name -eq "PamXRefExe").value="\\newpath\PamXRef.exe";$x.Save($f)
+
+$f="C:\Configs\AceDataReview.exe.config";[xml]$x=Get-Content $f;$s=$x.configuration.applicationSettings.ChildNodes|%{$_.setting};($s|? name -eq "Client_Volume").value="test5";($s|? name -eq "PamXRefExe").value="\\prdceuse2buatfsharesa01.file.core.windows.net\grl-app-binaries\psg\NewPath\PamXRef.exe";$x.Save($f)
+
+
+Copy-Item $f "$f.bak"
