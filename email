@@ -1,6 +1,24 @@
-Request for Password to Update .db3 and .msd Files
-
+Subject: Current Status on GRL – 21/05/2026
 Hi Team,
-We are currently working on updating the paths in the .db3 and .msd files. However, we require the password to export the tables and proceed with the necessary updates.
-Could you please assist by sharing the password? Alternatively, we are happy to connect via a screen share session, and you can enter the password directly.
-Please let us know your availability.
+As discussed on 18th & 19th May 2026, we have completed the following activities:
+1. GRL – Testing using PAM Menu
+
+We started testing at 9:00 AM today after obtaining VDI access.
+Out of 26 applications:
+
+19 passed
+1 failed
+6 are not visible in the PAM menu dropdown
+
+
+As confirmed by Vishal, we have performed the required basic testing, and results are satisfactory (as per testing scope defined in the document).
+
+2. GRL – Non-Mod Status
+
+Current progress is approximately 50% completion.
+Errors observed over the weekend were tested, but both Sharath and our team were unable to resolve them.
+The error messages are generic, and the root cause is not clear at this stage.
+We require expert support (ARO or relevant team) for deeper analysis and resolution. Sharath may provide additional inputs here.
+
+Since we logged in early today for the VDI session, we have handed over the session to Rajesh and Satish for continued testing of Console and Mod applications.
+Please let us know if any further inputs are required.
