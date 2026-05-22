@@ -1,24 +1,24 @@
-Subject: Current Status on GRL – 21/05/2026
 Hi Team,
-As discussed on 18th & 19th May 2026, we have completed the following activities:
-1. GRL – Testing using PAM Menu
+I would like to highlight a key gap we identified after yesterday’s GRL call (post 10:00 PM) with Kushboo, where Nancy was also part of the discussion.
+It became evident that the critical requirement of setting up a dedicated UAT application infrastructure was not communicated to us earlier, which has significantly impacted the way we completed all GRL testing.
+As per the clarified approach, the correct process should be as follows:
 
-We started testing at 9:00 AM today after obtaining VDI access.
-Out of 26 applications:
+1.	Copy application binaries from Prod/Dev to a new UAT shared location. 
+2.	Update all configuration files to point to Dev/UAT paths and ensure all Prod references are removed.
+3.	Prepare UAT infrastructure, including: 
+o	PAM Menu
+o	PAM Xref
+o	PAM Log
+(All paths and key parameters need to be updated accordingly.) – This is the key step we which was not communicated to us.
+4.	Once infrastructure is ready, start testing individual client applications (155 apps separately).
+5.	Perform testing via PAM Menu, covering both PFI and GRL scenarios.
+6.	Post validation, handover to QA teams.
 
-19 passed
-1 failed
-6 are not visible in the PAM menu dropdown
+Since this foundational step was not shared earlier, the testing approach followed so far did not align with the expected process.
+Additionally, we need clarification on the below points:
 
+•	What approach/setup was followed in Dev?
+•	Why was this UAT infrastructure requirement not communicated earlier?
+•	Do we have the password/access details for the .db3 file required for setup/testing?
 
-As confirmed by Vishal, we have performed the required basic testing, and results are satisfactory (as per testing scope defined in the document).
-
-2. GRL – Non-Mod Status
-
-Current progress is approximately 50% completion.
-Errors observed over the weekend were tested, but both Sharath and our team were unable to resolve them.
-The error messages are generic, and the root cause is not clear at this stage.
-We require expert support (ARO or relevant team) for deeper analysis and resolution. Sharath may provide additional inputs here.
-
-Since we logged in early today for the VDI session, we have handed over the session to Rajesh and Satish for continued testing of Console and Mod applications.
-Please let us know if any further inputs are required.
+Requesting the team to review and confirm this is the agreed standard going forward. It would also help if such critical prerequisites are communicated upfront to avoid rework and delays.
