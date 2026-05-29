@@ -1,0 +1,5 @@
+Do we need to copy all existing client folders (.exe + supporting files) to the new path: \\az-psgprod\psg_uat?
+If yes, do we need to update the new path in all configuration/INI files (PAMMenu, PamXref, PamProjectLog)?
+Should we then retest each individual GRL application?
+Do we need to map the apps again in the PAM menu (PamProject database)?
+Finally, perform end-to-end testing from PAM Menu?
