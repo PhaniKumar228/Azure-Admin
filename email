@@ -1,24 +1,58 @@
+Subject: GRL Testing – Key Blockers & Clarifications Required
 Hi Team,
-I would like to highlight a key gap we identified after yesterday’s GRL call (post 10:00 PM) with Kushboo, where Nancy was also part of the discussion.
-It became evident that the critical requirement of setting up a dedicated UAT application infrastructure was not communicated to us earlier, which has significantly impacted the way we completed all GRL testing.
-As per the clarified approach, the correct process should be as follows:
+We have identified the following blockers while preparing for GRL testing:
 
-1.	Copy application binaries from Prod/Dev to a new UAT shared location. 
-2.	Update all configuration files to point to Dev/UAT paths and ensure all Prod references are removed.
-3.	Prepare UAT infrastructure, including: 
-o	PAM Menu
-o	PAM Xref
-o	PAM Log
-(All paths and key parameters need to be updated accordingly.) – This is the key step we which was not communicated to us.
-4.	Once infrastructure is ready, start testing individual client applications (155 apps separately).
-5.	Perform testing via PAM Menu, covering both PFI and GRL scenarios.
-6.	Post validation, handover to QA teams.
+1. Pamproject.mdb – Update Required
 
-Since this foundational step was not shared earlier, the testing approach followed so far did not align with the expected process.
-Additionally, we need clarification on the below points:
+As per the documentation, the file needs to be updated before initiating GRL testing.
+However, Project and tableapplicationconfg tables are missing in the new Pamproject.mdb.
+Not sure if the correct file was copied.
+Please confirm:
 
-•	What approach/setup was followed in Dev?
-•	Why was this UAT infrastructure requirement not communicated earlier?
-•	Do we have the password/access details for the .db3 file required for setup/testing?
+Is this the correct version?
+Or should we use the copy from the old path?
 
-Requesting the team to review and confirm this is the agreed standard going forward. It would also help if such critical prerequisites are communicated upfront to avoid rework and delays.
+
+
+
+2. Pam Project Log Configuration
+
+Currently pointing to PROD environment – needs correction.
+Although documentation is available, setup needs to be done from scratch.
+Issue: Menu bar options are not visible.
+Access is not available – may require a SailPoint request.
+Requesting support from anyone who has experience with this setup.
+
+
+3. New Path Access Issues
+Path: \\az-psgprod\psg\psg_uat
+
+Firecall accounts do not have access (tested with 04 account – failed).
+The new share currently contains dumped/copy backup folders, causing confusion.
+We need clarity on:
+
+Which folders can be deleted
+Whether we can create a fresh folder structure
+
+
+Note: We used default paths successfully for 29 MOD apps yesterday.
+
+
+4. pamdatabase.ini Issues
+
+Header Format Issue: Headers are in capital letters and not aligned with standards.
+Sorting Issue: Client name sorting is not in alphabetical order.
+
+
+Support Required
+Requesting help on:
+
+Correct Pamproject.mdb file/version
+Access enablement (SailPoint / Firecall)
+Cleanup and validation of new share path
+Guidance on Pam Project Log configuration
+
+
+Please let us know the next steps or connect if a quick discussion is needed to unblock.
+Thanks,
+Phani
