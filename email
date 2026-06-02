@@ -1,1 +1,146 @@
-We will create a separate folder for Non-Mod apps and use it moving forward for testing activities.
+✅ Non-Mod Application Processing – Instructions
+1. Validate Client Mapping
+
+Open Excel Sheet: Nonmod_tracker
+Verify:
+
+ClientNo_Application
+Client Name
+
+
+Ensure both are mapped correctly to the right Client and correct Application Number
+
+
+2. Check Exclusion List
+
+Verify if the client exists in the Exclude List
+If YES:
+
+Mark the following columns as "Excluded":
+
+Column G
+Column H
+Column I
+Column J
+
+
+
+
+
+
+3. Copy Application Files
+
+If all validations are correct:
+
+Copy only the relevant client application folder
+
+
+Important Guidelines:
+
+✅ Copy from:
+
+Old Location: <Specify Path>
+New Location: <Specify Path>
+
+
+✅ Copy only inside the Non-Mod folder
+❌ Do NOT copy anything outside the Non-Mod folder
+❌ Do NOT copy all folders — only the required client app folder
+
+
+
+
+4. Update Configuration Files
+
+Update all:
+
+.config files
+.ini files
+
+
+
+Required Changes:
+
+Update paths
+
+Repoint all paths to the new location
+
+
+Update Project ID
+
+Set Project ID = 2628
+
+
+
+
+5. Application Testing
+
+Launch the application using the .exe file
+Perform testing by:
+
+Generating a sample report
+
+
+Ensure:
+
+Application opens correctly
+Report generation works without errors
+
+
+
+
+6. Update PAM Project Log
+
+Update PamProjectLog as per the reference document
+Guidelines:
+
+Developer Name: Optional (Not mandatory)
+Description: Use:
+
+Client Name OR
+Default value (as defined)
+
+
+
+
+
+
+7. Update PAM Project Database
+
+Update paths in:
+
+Pamproject.mdb
+
+
+Follow document instructions strictly
+
+
+8. Test via PAMMENU
+
+Launch PAMMENU
+Test the GRL application
+If any issues occur:
+
+Fix all issues
+Retest until results are stable and successful
+
+
+
+
+9. Final Verification & Handover
+
+Perform complete revalidation of all steps
+Move the client entry to:
+
+Handover Sheet
+
+
+
+Communication:
+
+Inform Vishal via Email
+Send consolidated update by End of Day (EOD)
+Final update to be shared during 10:00 PM call
+
+
+✅ Outcome: Client is fully validated, configured, tested, and ready for handover.
