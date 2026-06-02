@@ -1,12 +1,5 @@
-Subject / Message: New Tracker & Execution Plan
-As discussed in today’s call, I have created a new tracker. Please start using this tracker going forward.
+=LEFT(A1, FIND("@", SUBSTITUTE(A1,"\", "@", LEN(A1)-LEN(SUBSTITUTE(A1,"\",""))))
 
-Begin picking up clients by assigning them to your name.
-Follow the defined instructions step-by-step for each client.
 
-Important:
 
-Columns G, H, I, and J are critical and must be updated correctly.
-Old paths are already mentioned in the tracker — you can use them and update to the latest paths wherever required.
-
-Please ensure updates are done accurately and on time.
+=RIGHT(A1, LEN(A1)-FIND("@", SUBSTITUTE(A1,"\", "@", LEN(A1)-LEN(SUBSTITUTE(A1,"\","")))))
