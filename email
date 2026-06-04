@@ -1,3 +1,5 @@
-We have migrated PamMenu, PamProjectLog, and PamXref to Azure paths.
-Currently, we are in the process of updating all dependent applications, and no applications have been delivered yet.
-We are proceeding to close this Jira ticket for now. Once the application deliveries are completed, you may proceed with testing and re-open the request if any issues are identified.
+Subject: Jira Requests Cancellation & Next Steps
+Hi Team,
+As discussed in today’s call, I have cancelled all the Jira requests. Please find the list below for your reference.
+We will proceed with completing the handover activities first. Once that is done, we will start picking up and working on new Jira requests accordingly.
+Please let me know if you have any concerns.
