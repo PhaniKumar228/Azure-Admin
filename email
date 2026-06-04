@@ -1,5 +1,3 @@
-=LEFT(A1, FIND("@", SUBSTITUTE(A1,"\", "@", LEN(A1)-LEN(SUBSTITUTE(A1,"\",""))))
-
-
-
-=RIGHT(A1, LEN(A1)-FIND("@", SUBSTITUTE(A1,"\", "@", LEN(A1)-LEN(SUBSTITUTE(A1,"\","")))))
+We have migrated PamMenu, PamProjectLog, and PamXref to Azure paths.
+Currently, we are in the process of updating all dependent applications, and no applications have been delivered yet.
+We are proceeding to close this Jira ticket for now. Once the application deliveries are completed, you may proceed with testing and re-open the request if any issues are identified.
