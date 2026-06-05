@@ -1,3 +1,22 @@
+function Read-ConfigXml {
+    param (
+        [Parameter(Mandatory)]
+        [string]$FilePath
+    )
+
+    if (!(Test-Path $FilePath)) {
+        throw "Config file not found: $FilePath"
+    }
+
+    try {
+        [xml]$config = Get-Content -Path $FilePath
+        return $config
+    }
+    catch {
+        throw "Error parsing config file: $_"
+    }
+}
+
 function Get-AppSetting {
     param (
         [xml]$Config,
