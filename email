@@ -52,7 +52,15 @@ SIT
 
 We will use the existing SIT path structure
 
+4. Testing Approach Clarification
 
+As per the document, testing is mentioned under SIT
+However, our understanding is that testing should be conducted from UAT
+
+👉 Please confirm whether:
+
+Testing should be performed from UAT, or
+We need to continue aligning with the SIT document guidelines
 
 
 Kindly review and confirm the above points so we can proceed accordingly without any misalignment.
