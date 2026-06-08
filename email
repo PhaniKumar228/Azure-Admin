@@ -1,2 +1,60 @@
-We have reverted all Jira tickets to their previous states based on the history, and everything is now in order.
-Apologies for the confusion caused
+Subject: Clarification Required – PAM Files Location, Client Paths & PAM Project Log Setup
+Hi Team,
+As discussed across our recent calls, we need some clarifications before proceeding further with the PAM setup and related folder structures.
+1. PAM Files Location (Pammenu, PamXref, PamProjectLog)
+
+
+In the previous call, we had confirmation to move the following files:
+
+Pammenu, PamXref, PamProjectLog
+from
+\\az-psgprod\psg\
+to
+\\az-psgprod\psg_uat\
+and use them strictly for BUAT purpose.
+
+
+
+However, in today’s discussion with Srinkath & Nidhya, it was highlighted that:
+
+These files should NOT be moved to \\az-psgprod\psg_uat\
+We should continue using PAM Menu from \\az-psgprod\psg\ only
+
+
+
+👉 Kindly confirm the final approach to be followed.
+
+2. Client Folder Structure
+
+All clients are expected to be under:
+\\az-psgprod\psg_uat\
+
+👉 Please reconfirm if this is correct.
+
+3. PamProject Log & PAM Update Form – Structure Confirmation
+Requesting confirmation on the below points to proceed:
+
+
+Development Path
+
+Maintain only the skeleton structure
+Follow the structure from: \\az-psgdev\
+
+
+
+PROD / UAT
+
+Please confirm the required structure
+
+
+
+SIT
+
+We will use the existing SIT path structure
+
+
+
+
+Kindly review and confirm the above points so we can proceed accordingly without any misalignment.
+Thanks & Regards,
+Phanikumar
