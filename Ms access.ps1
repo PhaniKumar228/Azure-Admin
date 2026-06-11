@@ -82,3 +82,39 @@ $recordset.Close()
 $db.Close()
 $access.Quit()
 ``
+########################
+$dbPath = "C:\Data\sample.mdb"
+
+try {
+    $access = New-Object -ComObject Access.Application
+} catch {
+    Write-Error "Access COM object failed. Install Access or fix bitness."
+    return
+}
+
+if (-not $access) {
+    Write-Error "Access object is NULL"
+    return
+}
+
+$db = $access.DBEngine.OpenDatabase($dbPath)
+
+if (-not $db) {
+    Write-Error "DB open failed"
+    return
+}
+
+$recordset = $db.OpenRecordset("SELECT * FROM YourTable")
+
+while (-not $recordset.EOF) {
+    $row = @{}
+    foreach ($field in $recordset.Fields) {
+        $row[$field.Name] = $field.Value
+    }
+    [PSCustomObject]$row
+    $recordset.MoveNext()
+}
+
+$recordset.Close()
+$db.Close()
+$access.Quit()
