@@ -1,18 +1,1 @@
-Status Update – PFI BUAT (Lincoln Nation Launch Issue)
-PFI – BUAT (Lincoln Nation) application is currently not launching.
-Actions Taken:
-
-Engaged multiple stakeholders to gather detailed error information and identify the root cause.
-Conducted multiple screen-sharing sessions with Ram, Tarun, Amol, and Sinidhi – however, no clear root cause or fix has been identified so far.
-Notably, the application was working fine 3 weeks ago, and the recent failure suggests possible underlying changes (yet to be confirmed).
-Reached out to Kushboo for additional insights or known changes – awaiting response.
-
-Current Status:
-
-Issue remains open and under investigation.
-No confirmed root cause yet.
-
-Next Steps:
-
-Follow up with Kushboo and other relevant teams for any recent changes.
-Continue troubleshooting with extended teams once additional inputs are available.
+This was discussed in today’s status call. The team is experiencing similar issues in Dev as well today. Amol and I are actively working across UAT and Dev to identify a resolution. The root cause is still unknown, and we will keep you posted.”
