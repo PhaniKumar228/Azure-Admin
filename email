@@ -1,1 +1,9 @@
-This was discussed in today’s status call. The team is experiencing similar issues in Dev as well today. Amol and I are actively working across UAT and Dev to identify a resolution. The root cause is still unknown, and we will keep you posted.”
+Subject: Azure SQL MI PROD – Backup Restore Requests for Assessment
+Hi Team,
+As discussed in yesterday’s call, we have initiated work on the Azure SQL Managed Instance (MI) PROD servers.
+As part of this activity, we have submitted requests to restore SQL database backups on the PROD servers. This exercise will help us capture restore timelines, which in turn will assist us in planning and finalizing the action plan for customer downtime.
+Please find the RITM details below for your reference:
+[Add RITM details here]
+We will keep you updated with further progress.
+Thanks & Regards,
+Phanikumar
