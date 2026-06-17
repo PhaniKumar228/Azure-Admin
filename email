@@ -1,9 +1,3 @@
-Subject: Azure SQL MI PROD – Backup Restore Requests for Assessment
-Hi Team,
-As discussed in yesterday’s call, we have initiated work on the Azure SQL Managed Instance (MI) PROD servers.
-As part of this activity, we have submitted requests to restore SQL database backups on the PROD servers. This exercise will help us capture restore timelines, which in turn will assist us in planning and finalizing the action plan for customer downtime.
-Please find the RITM details below for your reference:
-[Add RITM details here]
-We will keep you updated with further progress.
-Thanks & Regards,
-Phanikumar
+The final path should be \\psg_uat\\. We are not using \\psg_uat\\non-mod as it is not active.
+Are we referring to any old items here? All 60 applications have already been pointed to \\psg_uat\\.
+Could you please share the application names that are still pointing to \\psg_uat\\non-mod? We will verify and correct them if needed.
