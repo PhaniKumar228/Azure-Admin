@@ -1,3 +1,37 @@
-The final path should be \\psg_uat\\. We are not using \\psg_uat\\non-mod as it is not active.
-Are we referring to any old items here? All 60 applications have already been pointed to \\psg_uat\\.
-Could you please share the application names that are still pointing to \\psg_uat\\non-mod? We will verify and correct them if needed.
+Hi Team,
+We have been working with multiple engineers; however, we are still unable to identify the actual root cause of the issue.
+As part of today’s troubleshooting effort, we performed the following actions from scratch:
+
+
+Reinstalled SQL ODBC Drivers (v11 & v18):
+
+Successfully addressed earlier endpoint-related issues.
+However, a new/different error is now being encountered.
+
+
+
+Recreated Configuration Files:
+
+All configuration files were rebuilt from scratch.
+The issue persists with the same error.
+
+
+
+Log Analysis:
+
+Reviewed all available logs.
+Errors appear generic in nature and do not point to a specific root cause or failure component.
+
+
+
+At this point, we are unable to narrow down the issue to a particular area for further troubleshooting.
+Request:
+Could you please confirm if any subject matter expert is available to assist with advanced troubleshooting? Specifically, it would help to:
+
+Attempt alternative testing methods (e.g., command prompt / script-based validation instead of GUI tools)
+Perform deeper diagnostics to isolate the root cause
+
+Also, the current log files do not provide sufficient detail for further analysis. Any guidance on enabling detailed logging or alternative debugging approaches would be helpful.
+Looking forward to your support.
+Thanks & Regards,
+Phanikumar
