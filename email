@@ -1,37 +1,47 @@
-Hi Team,
-We have been working with multiple engineers; however, we are still unable to identify the actual root cause of the issue.
-As part of today’s troubleshooting effort, we performed the following actions from scratch:
+Yes, this issue is related to PFI – Lincoln National (BUAT Server). Please find the overall summary below:
+✅ Implementation Summary:
 
+Azure SQL Managed Instance (MI) was successfully deployed
+Databases were restored
+SPN configuration was completed both in application config and SQL Server
+End-to-end testing was performed
+Handover was completed with confirmation that everything was working as expected
 
-Reinstalled SQL ODBC Drivers (v11 & v18):
+⚠️ Issue Background:
 
-Successfully addressed earlier endpoint-related issues.
-However, a new/different error is now being encountered.
+After approximately 20 days, a defect was reported stating that:
 
-
-
-Recreated Configuration Files:
-
-All configuration files were rebuilt from scratch.
-The issue persists with the same error.
-
-
-
-Log Analysis:
-
-Reviewed all available logs.
-Errors appear generic in nature and do not point to a specific root cause or failure component.
+Lincoln National application is not functioning as expected
+PAM menu is not launching
 
 
 
-At this point, we are unable to narrow down the issue to a particular area for further troubleshooting.
-Request:
-Could you please confirm if any subject matter expert is available to assist with advanced troubleshooting? Specifically, it would help to:
+🔍 Troubleshooting Summary:
 
-Attempt alternative testing methods (e.g., command prompt / script-based validation instead of GUI tools)
-Perform deeper diagnostics to isolate the root cause
+Multiple troubleshooting sessions were conducted, including discussions during stand-up calls
+Several team members attempted to assist; however, the root cause has not yet been identified
 
-Also, the current log files do not provide sufficient detail for further analysis. Any guidance on enabling detailed logging or alternative debugging approaches would be helpful.
-Looking forward to your support.
+📌 Current Observations:
+
+Configuration appears correct (SPN, config files, etc.)
+Connectivity is working as expected
+Required drivers are installed and verified
+Error messages observed are generic in nature, making it difficult to isolate the issue to a specific component
+
+📍 Environment Details:
+
+Azure MI: 
+Application Server: <Provide Server Name / Details>
+Configuration Path: 
+
+
+🙏 Support Required:
+At this stage, we request support from an SME to:
+
+Perform deeper analysis on authentication / application behavior
+Validate end-to-end flow beyond infrastructure (application layer)
+Suggest alternative diagnostic approaches (command-line / backend tracing if applicable)
+
+
+Please let us know if any additional information is required from our end.
 Thanks & Regards,
-Phanikumar
