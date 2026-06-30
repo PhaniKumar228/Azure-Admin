@@ -1,5 +1,30 @@
-Subject: Production Project Tracker – Progress Updates
-Hi Mrunali,
-I have prepared the Production Project Tracker covering the information gathering, pre-checks, database restoration, application configuration, testing, and handover activities.
-All project-related updates, progress, blockers, dependencies, and completion status will be maintained and updated regularly in the attached Excel tracker for better visibility and tracking.
-Please review the tracker and let me know if any additional activities need to be included.
+We have identified and resolved the issues impacting the application launch. Below is a summary of the findings and fixes implemented:
+
+
+Managed Identity Configuration
+
+We identified that the incorrect managed identity was being used.
+The application was configured with the wrong identity (user-assigned/system-assigned mismatch).
+We updated the configuration with the correct managed identity, which resolved the issue.
+
+
+
+Application Shortcut Configuration
+
+Under Shortcut → Properties → Advanced, the "Run as Administrator" option was enabled.
+This caused the application to prompt for admin credentials and subsequently fail.
+We unchecked the "Run as Administrator" option, which resolved the issue.
+
+
+
+Auto Login Failure
+
+We worked with Brian High to investigate the auto-login issue.
+He added the required account to the authorized user list and included it in the AppSupport group.
+After these changes, the auto-login functionality started working successfully.
+
+
+
+Following the above fixes, we have successfully validated the application launch and functionality. The application is now launching successfully without any issues.
+As the issue has been resolved, we are closing this thread.
+Thank you to everyone involved in troubleshooting and resolving the problem.
