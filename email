@@ -1,3 +1,18 @@
-Thanks for the quick identification and for sharing the resolution steps.
-We will proceed with obtaining access to the PAM menu, complete the end-to-end testing, and then move forward with the application handover.
-Thanks again for the support.
+Subject: Confirmation Required for PROD Servers – PFI Setup & Prerequisite Installation
+Hi Team,
+We have started the SQL PFI setup activities for the PROD servers. Based on the inventory spreadsheet, we have identified the list of servers below.
+Could you please review and confirm:
+
+Whether the listed servers are the correct PROD servers to be onboarded for PFI.
+Whether we are good to proceed with the prerequisite installations on these servers, including:
+
+PAM Components
+ODBC Drivers
+Other required PFI prerequisites
+
+
+
+Once we receive confirmation, we will proceed with the prerequisite installations and continue with the PFI onboarding activities.
+Please review the server list below and confirm at the earliest.
+Server List:
+<Insert Server List>
