@@ -1,54 +1,19 @@
-Subject: Lincoln National PFI / MOD Application Connectivity Issue – Investigation Summary
-Hi Team,
-We worked on the PFI – Lincoln National issue today along with Sharath.
-Work Performed
+JIRA Closure Notes – Ready for QA Retest
+Application Name: GL Feed & GL Balance File - 3451
+Application Path: \\az-psgprod\PSG_UAT\TIAA_Cref\GL_Feed
+Testing Performed
 
-Added the required Lincoln National entry in the pamdatabase.ini file.
-Performed validation checks after the configuration update.
-Verified that PFI – Lincoln National launches successfully from the PAM menu and is working as expected.
+Test Case 01: Creation of General GL File – ✅ Passed
+Test Case 02: Creation of Balance File – ✅ Passed
 
-Current Status
-✅ PFI – Lincoln National: Working
-❌ MOD Lincoln National Shared Applications: Failing
-Observations
+Validation Summary
 
-We tested the application connectivity from the IIS server level and observed failures.
-Although the PFI application launched from PAM is working successfully, the associated MOD/Shared applications continue to fail.
-At this stage, the behavior suggests a compatibility or dependency issue specific to the IIS-hosted application path.
+Reviewed the application as per the provided documentation.
+Validated all relevant tabs, options, and functionalities.
+Successfully generated both the General GL File and Balance File.
+No issues were observed during testing.
+Output files were captured and attached for reference.
 
-Error Identified from Logs
-The IIS application logs show:
-Plain Text[IM002] [Microsoft][ODBC Driver Manager]Data source name not found and no default driver specifiedShow more lines
-This typically indicates:
-
-Missing ODBC Driver
-Missing ODBC DSN
-Incorrect driver name referenced in the connection string
-32-bit / 64-bit ODBC mismatch
-
-Working Assumption
-Based on the log analysis, I suspect the IIS-hosted application may require Microsoft ODBC Driver 18 for SQL Server to connect to Azure SQL Managed Instance.
-Since we are using SPN/Integrated Authentication for Azure MI connectivity, we need to confirm whether the IIS application server establishes the database connection directly.
-If the IIS application initiates the connection to Azure MI, then:
-
-The required ODBC driver must be installed on the IIS server.
-Any DSNs used by the application must also be configured on the IIS server.
-Driver versions and architecture (64-bit vs 32-bit) should match the application's requirements.
-
-Questions / Clarifications Required
-
-Does the IIS server connect directly to Azure SQL Managed Instance for the MOD applications?
-If yes, are we approved to install Microsoft ODBC Driver 18 for SQL Server on the IIS server?
-Can we compare the driver inventory and DSN configuration between a working environment and the affected IIS server?
-Has there been any recent change in driver versions, SPN configuration, or IIS application pool settings?
-
-Recommended Next Steps
-
-Verify installed ODBC drivers on the IIS server.
-Check whether the required DSN exists.
-Confirm application pool bitness (32-bit vs 64-bit).
-Compare IIS server configuration with a working environment.
-Install Microsoft ODBC Driver 18 (if approved and not already present).
-Retest MOD Lincoln National shared applications.
-
-At this point, the PFI issue is resolved, but the MOD Lincoln National shared applications remain impacted due to a likely IIS-side database connectivity dependency. Further investigation is required to confirm whether the missing ODBC driver/DSN configuration is the root cause. Thanks.
+Closure Comments
+The reported issue has been tested and validated successfully in the UAT environment. All functionalities are working as expected. Supporting output files have been attached.
+Status: Passed to QA for retesting and final validation.
