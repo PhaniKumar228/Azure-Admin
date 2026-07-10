@@ -1,19 +1,16 @@
-JIRA Closure Notes – Ready for QA Retest
-Application Name: GL Feed & GL Balance File - 3451
-Application Path: \\az-psgprod\PSG_UAT\TIAA_Cref\GL_Feed
-Testing Performed
+Thanks for creating this chat room.
 
-Test Case 01: Creation of General GL File – ✅ Passed
-Test Case 02: Creation of Balance File – ✅ Passed
+As we do not have access to the on-premises servers before the migration, we want to ensure that nothing is missed during the migration from on-prem to Azure. This includes items such as:
 
-Validation Summary
+Linked Servers
+SQL Logins
+SQL Agent Jobs
+Certificates
+Database Mail
+Credentials
+Server Configurations
+Any other server-level or application-related dependencies
 
-Reviewed the application as per the provided documentation.
-Validated all relevant tabs, options, and functionalities.
-Successfully generated both the General GL File and Balance File.
-No issues were observed during testing.
-Output files were captured and attached for reference.
+I have already attached a document to the RITM containing the server names and the required information. Re-sharing the details here for reference.
 
-Closure Comments
-The reported issue has been tested and validated successfully in the UAT environment. All functionalities are working as expected. Supporting output files have been attached.
-Status: Passed to QA for retesting and final validation.
+If you need any clarification or would like to discuss the requirements in detail, we are happy to join a call and walk through everything together. Thank you.
