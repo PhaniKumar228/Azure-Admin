@@ -1,16 +1,35 @@
-Thanks for creating this chat room.
+ServiceNow Request Description
 
-As we do not have access to the on-premises servers before the migration, we want to ensure that nothing is missed during the migration from on-prem to Azure. This includes items such as:
+Subject: Request for SPN Password Retrieval and Vaulting in Azure Key Vault
 
-Linked Servers
-SQL Logins
-SQL Agent Jobs
-Certificates
-Database Mail
-Credentials
-Server Configurations
-Any other server-level or application-related dependencies
+Description:
 
-I have already attached a document to the RITM containing the server names and the required information. Re-sharing the details here for reference.
+We are looking for the password/secret associated with the below Production Service Principal (SPN). The credential is required to be securely stored in Azure Key Vault for ongoing operational use.
 
-If you need any clarification or would like to discuss the requirements in detail, we are happy to join a call and walk through everything together. Thank you.
+Could you please assist in identifying where the SPN password is currently stored or vaulted and provide the necessary details/access to retrieve it?
+
+SPN Details:
+
+SPN Name: <SPN Name>
+Application (Client) ID: <Application ID>
+Tenant ID: <Tenant ID>
+Environment: Production
+
+Target Azure Key Vault:
+
+Key Vault Name: <Key Vault Name>
+Subscription: <Subscription Name/ID>
+Resource Group: <Resource Group Name>
+
+Request:
+
+Identify the current storage location of the SPN password/secret.
+Retrieve or share the password securely with the authorized team.
+Store/vault the secret in the specified Azure Key Vault.
+Confirm once the secret has been successfully vaulted.
+
+Business Justification: The SPN credential is required for application/infrastructure operations and must be centrally managed and secured within Azure Key Vault in accordance with security and compliance requirements.
+
+Assignment Group: Azure Platform / Identity Management Team (as applicable)
+
+Priority: Medium (or as per business requirement)
