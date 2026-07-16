@@ -1,35 +1,16 @@
-ServiceNow Request Description
+rem ***********************************************************************
+rem * Batch file for running PAMDBCredential utility *
+rem ***********************************************************************
 
-Subject: Request for SPN Password Retrieval and Vaulting in Azure Key Vault
+set path=F:\pfs\pfi\core;%path%
 
-Description:
+F:
 
-We are looking for the password/secret associated with the below Production Service Principal (SPN). The credential is required to be securely stored in Azure Key Vault for ongoing operational use.
+cd \pfs\pfi\Utility
 
-Could you please assist in identifying where the SPN password is currently stored or vaulted and provide the necessary details/access to retrieve it?
+PamDbCredentialUtil.exe -u:usrid -p:password -o:F:\pfs\pfi\encrypt.bin
 
-SPN Details:
-
-SPN Name: <SPN Name>
-Application (Client) ID: <Application ID>
-Tenant ID: <Tenant ID>
-Environment: Production
-
-Target Azure Key Vault:
-
-Key Vault Name: <Key Vault Name>
-Subscription: <Subscription Name/ID>
-Resource Group: <Resource Group Name>
-
-Request:
-
-Identify the current storage location of the SPN password/secret.
-Retrieve or share the password securely with the authorized team.
-Store/vault the secret in the specified Azure Key Vault.
-Confirm once the secret has been successfully vaulted.
-
-Business Justification: The SPN credential is required for application/infrastructure operations and must be centrally managed and secured within Azure Key Vault in accordance with security and compliance requirements.
-
-Assignment Group: Azure Platform / Identity Management Team (as applicable)
-
-Priority: Medium (or as per business requirement)
+%SystemDrive%
+%SystemRoot%\system32\net use %DRIVE% /delete
+%SystemRoot%\system32\net use %DRIVE% %DB%
+pause
