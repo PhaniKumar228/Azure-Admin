@@ -1,16 +1,7 @@
-rem ***********************************************************************
-rem * Batch file for running PAMDBCredential utility *
-rem ***********************************************************************
+Hi Kumar,
 
-set path=F:\pfs\pfi\core;%path%
+The Lincoln National issue has been resolved now. Could you please re-add the Lincoln National entry to the pamdatabase.ini file?
 
-F:
+We had a quick discussion earlier today, and Sharath asked me to reach out to you regarding this change.
 
-cd \pfs\pfi\Utility
-
-PamDbCredentialUtil.exe -u:usrid -p:password -o:F:\pfs\pfi\encrypt.bin
-
-%SystemDrive%
-%SystemRoot%\system32\net use %DRIVE% /delete
-%SystemRoot%\system32\net use %DRIVE% %DB%
-pause
+Please let us know once the entry has been added.
