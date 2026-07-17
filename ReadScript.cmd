@@ -1,61 +1,40 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: ====================================================
-:: Configuration
-:: ====================================================
 set "INPUTLIST=FileList.txt"
 set "OUTPUTCSV=Output.csv"
 set "BASEPATH=\\aws-infkc1p01\Batch"
 
-echo CmdFile,FolderPath,FileName,FullPath > "%OUTPUTCSV%"
+echo CmdFile,FolderPath,FileName,FullPath>Status.csv
 
-:: ====================================================
-:: Process each file from file list
-:: ====================================================
 for /f "usebackq delims=" %%F in ("%INPUTLIST%") do (
 
-    set "SCRIPTFILE=%%F"
+    set "FILE=%%F"
 
-    :: Check if file exists
     if not exist "%%F" (
-        echo "%%~nxF",N/A,N/A,File Not Found >> "%OUTPUTCSV%"
-        goto :continue
-    )
+        echo %%~nxF,N/A,N/A,File Not Found>>"%OUTPUTCSV%"
+    ) else (
 
-    :: Validate path
-    echo %%F | find /I "%BASEPATH%" >nul
+        echo %%F | find /I "%BASEPATH%" >nul
 
-    if errorlevel 1 (
-        echo "%%~nxF",N/A,N/A,Out of Path >> "%OUTPUTCSV%"
-        goto :continue
-    )
+        if errorlevel 1 (
+            echo %%~nxF,N/A,N/A,Out of Path>>"%OUTPUTCSV%"
+        ) else (
 
-    :: Read file and extract UNC paths
-    for /f "tokens=*" %%L in ('findstr /R "\\\\.*" "%%F"') do (
+            for /f "tokens=*" %%L in ('findstr "\\\\" "%%F"') do (
 
-        set "LINE=%%L"
+                for %%P in (%%L) do (
 
-        :: Remove quotes
-        set "LINE=!LINE:"=!"
+                    echo %%P|findstr /B "\\\\" >nul
 
-        :: Split on spaces and check each token
-        for %%P in (!LINE!) do (
-
-            echo %%P | findstr /B "\\\\" >nul
-
-            if not errorlevel 1 (
-
-                echo "%%~nxF","%%~dpP","%%~nxP","%%P" >> "%OUTPUTCSV%"
-
+                    if not errorlevel 1 (
+                        echo %%~nxF,%%~dpP,%%~nxP,%%P>>"%OUTPUTCSV%"
+                    )
+                )
             )
         )
     )
-
-    :continue
 )
 
-echo.
-echo Output generated:
-echo %OUTPUTCSV%
+echo Done.
 pause
