@@ -1,61 +1,35 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: ====================================================
-:: Configuration
-:: ====================================================
-set "INPUTLIST=FileList.txt"
-set "OUTPUTCSV=Output.csv"
-set "BASEPATH=\\aws-infkc1p01\Batch"
+REM Configuration
+set "FILELIST=C:\Ens_ReadScript\FileList.txt"
+set "SOURCE=C:\SourceFiles"
+set "DEST=C:\ProcessedFiles"
 
-echo CmdFile,FolderPath,FileName,FullPath > "%OUTPUTCSV%"
+echo ======================================
+echo Starting File Processing
+echo ======================================
 
-:: ====================================================
-:: Process each file from file list
-:: ====================================================
-for /f "usebackq delims=" %%F in ("%INPUTLIST%") do (
+for /f "usebackq delims=" %%F in ("%FILELIST%") do (
 
-    set "SCRIPTFILE=%%F"
+    set "FILENAME=%%F"
 
-    :: Check if file exists
-    if not exist "%%F" (
-        echo "%%~nxF",N/A,N/A,File Not Found >> "%OUTPUTCSV%"
-        goto :continue
-    )
+    if exist "%SOURCE%\!FILENAME!" (
 
-    :: Validate path
-    echo %%F | find /I "%BASEPATH%" >nul
+        echo Found: !FILENAME!
+        move "%SOURCE%\!FILENAME!" "%DEST%\" >nul
 
-    if errorlevel 1 (
-        echo "%%~nxF",N/A,N/A,Out of Path >> "%OUTPUTCSV%"
-        goto :continue
-    )
-
-    :: Read file and extract UNC paths
-    for /f "tokens=*" %%L in ('findstr /R "\\\\.*" "%%F"') do (
-
-        set "LINE=%%L"
-
-        :: Remove quotes
-        set "LINE=!LINE:"=!"
-
-        :: Split on spaces and check each token
-        for %%P in (!LINE!) do (
-
-            echo %%P | findstr /B "\\\\" >nul
-
-            if not errorlevel 1 (
-
-                echo "%%~nxF","%%~dpP","%%~nxP","%%P" >> "%OUTPUTCSV%"
-
-            )
+        if !errorlevel! EQU 0 (
+            echo SUCCESS: !FILENAME! moved.
+        ) else (
+            echo FAILED: !FILENAME! could not be moved.
         )
-    )
 
-    :continue
+    ) else (
+        echo MISSING: !FILENAME!
+    )
 )
 
 echo.
-echo Output generated:
-echo %OUTPUTCSV%
+echo Processing Complete.
 pause
