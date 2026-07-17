@@ -5,36 +5,36 @@ set "INPUTLIST=FileList.txt"
 set "OUTPUTCSV=Output.csv"
 set "BASEPATH=\\aws-infkc1p01\Batch"
 
-echo CmdFile,FolderPath,FileName,FullPath>Status.csv
+echo FileName,Status> "%OUTPUTCSV%"
 
 for /f "usebackq delims=" %%F in ("%INPUTLIST%") do (
 
     set "FILE=%%F"
 
-    if not exist "%%F" (
-        echo %%~nxF,N/A,N/A,File Not Found>>"%OUTPUTCSV%"
+    REM Skip blank lines
+    if "!FILE!"=="" (
+        echo BlankLine,EMPTY>>"%OUTPUTCSV%"
+        echo EMPTY
     ) else (
 
-        echo %%F | find /I "%BASEPATH%" >nul
-
-        if errorlevel 1 (
-            echo %%~nxF,N/A,N/A,Out of Path>>"%OUTPUTCSV%"
+        if not exist "!FILE!" (
+            echo %%~nxF,NOT_FOUND>>"%OUTPUTCSV%"
+            echo %%~nxF FAILED
         ) else (
 
-            for /f "tokens=*" %%L in ('findstr "\\\\" "%%F"') do (
+            echo !FILE! | find /I "%BASEPATH%" >nul
 
-                for %%P in (%%L) do (
+            if errorlevel 1 (
+                echo %%~nxF,OUT_OF_PATH>>"%OUTPUTCSV%"
+                echo %%~nxF FAILED
+            ) else (
 
-                    echo %%P|findstr /B "\\\\" >nul
-
-                    if not errorlevel 1 (
-                        echo %%~nxF,%%~dpP,%%~nxP,%%P>>"%OUTPUTCSV%"
-                    )
-                )
+                echo %%~nxF,DONE>>"%OUTPUTCSV%"
+                echo %%~nxF DONE
             )
         )
     )
 )
 
-echo Done.
+echo Processing Completed.
 pause
