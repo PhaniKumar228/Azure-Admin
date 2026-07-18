@@ -1,7 +1,39 @@
-Hi Kumar,
+Subject: PFI - BUAT Status Update
 
-The Lincoln National issue has been resolved now. Could you please re-add the Lincoln National entry to the pamdatabase.ini file?
+Hi Team,
 
-We had a quick discussion earlier today, and Sharath asked me to reach out to you regarding this change.
+Please find the latest status update for PFI - BUAT:
 
-Please let us know once the entry has been added.
+1. Lincoln National
+Application testing completed successfully from PAMMENU.
+Listed users have been added to their respective roles.
+No issues observed during validation.
+2. Invesco
+Application testing completed successfully from PAMMENU.
+Listed users have been added to their respective roles.
+No issues observed during validation.
+3. GXDemo
+Currently facing issues related to the database version.
+We worked with J. Khusboo and gathered initial inputs. Additional guidance was also received from Amol.
+Based on the discussions, we have identified two possible approaches to address the issue. However, both approaches are currently based on assumptions, so we need to proceed carefully and validate each step before making any changes.
+
+Next Steps:
+
+Due to late-hour engagements and back-to-back calls on Friday, we were unable to raise a request with the DBA team.
+
+On Monday, we will:
+
+Raise the required DBA request.
+Unlock the user account.
+Test the identified options and validate the results.
+
+If the above options do not resolve the issue, the only remaining path will be to perform a stage-by-stage database upgrade, as there are currently no alternative solutions identified.
+
+Important Note
+
+If users are still unable to launch applications or view them within PAM, the issue may be due to:
+
+Use of an incorrect PAM Menu, or
+Missing access/permissions to the required PAM Menu.
+
+Please let us know if any additional information is required.
