@@ -1,58 +1,56 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set "INPUT=ScriptList.txt"
-set "BEFORE=Before_Modification.txt"
-set "AFTER=After_Modification.txt"
-set "LOG=PathChanges.txt"
+set "FILELIST=ScriptList.txt"
 
-del "%BEFORE%" 2>nul
-del "%AFTER%" 2>nul
-del "%LOG%" 2>nul
+set "BACKUPDIR=Before_18072026"
+set "AFTERDIR=After_18072026"
+set "LOG=Changes.log"
 
-:: Count total lines
+if not exist "%BACKUPDIR%" mkdir "%BACKUPDIR%"
+if not exist "%AFTERDIR%" mkdir "%AFTERDIR%"
+
 set TOTAL=0
-for /f "usebackq delims=" %%A in ("%INPUT%") do (
+for /f "usebackq delims=" %%A in ("%FILELIST%") do (
     set /a TOTAL+=1
 )
 
-echo Total Records: !TOTAL!
-echo.
+echo Started %DATE% %TIME% > "%LOG%"
 
 set COUNT=0
 
-for /f "usebackq delims=" %%A in ("%INPUT%") do (
+for /f "usebackq delims=" %%A in ("%FILELIST%") do (
 
     set /a COUNT+=1
 
-    set "OLD=%%A"
-    set "NEW=%%A"
+    for %%F in ("%%A") do set "FILENAME=%%~nxF"
 
-    echo %%A>>"%BEFORE%"
+    echo [!COUNT!/!TOTAL!] Processing !FILENAME!
 
-    set "NEW=!NEW:\\infkc1p01\=\\aws-infkc1p01\!"
-    set "NEW=!NEW:\\pamuit\=\\az-pamuit\!"
-    set "NEW=!NEW:\\PAMstorage\=\\aws-PAMstorage\!"
+    if exist "%%A" (
 
-    echo !NEW!>>"%AFTER%"
+        copy /Y "%%A" "%BACKUPDIR%\!FILENAME!" >nul
 
-    (
-        echo --------------------------------------------------
-        echo Record: !COUNT!/!TOTAL!
-        echo BEFORE: %%A
-        echo AFTER : !NEW!
-    )>>"%LOG%"
+        powershell -NoProfile -Command ^
+        "$c=Get-Content '%%A' -Raw;" ^
+        "$c=$c -replace '\\\\infkc1p01\\','\\\\aws-infkc1p01\\';" ^
+        "$c=$c -replace '\\\\pamuit\\','\\\\az-pamuit\\';" ^
+        "$c=$c -replace '\\\\PAMstorage\\','\\\\aws-PAMstorage\\';" ^
+        "Set-Content '%AFTERDIR%\!FILENAME!' $c"
 
-    echo [!COUNT!/!TOTAL!] Processed
+        echo ==================================================>>"%LOG%"
+        echo [!COUNT!/!TOTAL!] !FILENAME!>>"%LOG%"
+        echo Source : %%A>>"%LOG%"
+        echo Backup : %BACKUPDIR%\!FILENAME!>>"%LOG%"
+        echo Output : %AFTERDIR%\!FILENAME!>>"%LOG%"
+
+    ) else (
+        echo NOT FOUND : %%A>>"%LOG%"
+    )
 
     timeout /t 1 /nobreak >nul
 )
 
-echo.
-echo Completed !TOTAL! records.
-echo.
-echo BEFORE FILE : %BEFORE%
-echo AFTER FILE  : %AFTER%
-echo CHANGE LOG  : %LOG%
-
+echo Finished %DATE% %TIME% >> "%LOG%"
+echo Completed.
 pause
