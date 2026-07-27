@@ -1,2 +1,32 @@
-I can see the storage account in the resource group ssc-gts-pfi-sub-prd-82-rg-use2-shared-01.
+Subject: Request for Assistance with PFI BUAT Authorization/Configuration Issue
+
+Hi Nina,
+
+I hope you are doing well.
+
+We have completed the SQL MI migration and connectivity validation, and everything appears to be working as expected from the database side. However, we are currently facing an issue in the BUAT environment that appears to be related to PFI-side authorization or configuration.
+
+The application is failing with errors such as:
+
+"No portfolios in your current blotter"
+"Unauthorized portfolio"
+
+Based on our investigation, the issue seems to be related to one of the following:
+
+Missing or incorrect portfolio/security blotter permissions for the service account or user account.
+Differences between DEV and BUAT PFI configurations, portfolio mappings, or setup.
+PFI service account configuration or authorization settings.
+
+Would you and your team be able to assist with reviewing the engine.exe behavior and portfolio authorization configuration in BUAT? Your expertise would be greatly appreciated in helping us identify any permission, configuration, or data-related discrepancies that may be causing the issue.
+
+For reference, our current next steps include:
+
+Verifying service account and user permissions.
+Comparing DEV and BUAT portfolio mappings and configurations.
+Reviewing application and PFI logs.
+Validating key vault secrets and service account configuration.
+
+Please let us know if you need any logs, screenshots, or additional information from our side. We are happy to coordinate a call and work through the issue together.
+
+Thank you for your assistance and support.
  
