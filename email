@@ -1,1 +1,30 @@
-Hope everything is looking good with the Lincoln National BUAT testing. Can we consider Lincoln National BUAT as fully functional and working as expected? If there are any missing user accounts or access-related issues, we can work on granting the required permissions and address them separately.
+$SearchText = "Password"
+
+Get-ChildItem -Path "C:\Scripts" -Recurse -Include *.xml,*.ini,*.config |
+ForEach-Object {
+    Select-String -Path $_.FullName -Pattern $SearchText |
+    Select-Object Path, LineNumber, Line
+}
+
+$Words = @("Password","Server","Database")
+
+Get-ChildItem -Path "C:\Scripts" -Recurse -Include *.xml,*.ini,*.config |
+ForEach-Object {
+    Select-String -Path $_.FullName -Pattern $Words
+} | Select-Object Path, LineNumber, Line
+
+
+$Words = @("\\infkc1p01","\\pamuit","\\PAMstorage")
+
+Get-ChildItem -Path "C:\Scripts" -Recurse -Include *.xml,*.ini,*.config |
+ForEach-Object {
+    $File = $_.FullName
+
+    foreach ($Word in $Words) {
+        Select-String -Path $File -Pattern (:Escape($Word)) |
+        Select-Object @{N='File';E={$_.Path}},
+                      @{N='FoundText';E={$Word}},
+                      LineNumber,
+                      Line
+    }
+}
