@@ -1,12 +1,6 @@
-We have completed all required fixes and validations for Invesco and GXDemo. With this, all three PFI BUAT MSSQL clients are now ready for testing.
+Thanks for the update.
 
-Current Status
-✅ Lincoln National - Ready for testing
-✅ Invesco - All identified issues resolved and ready for testing
-✅ GXDemo - Ready for testing
+Lincoln National: I will provide access similar to the other clients to support the testing activities.
+GXDemo: It appears the application entry may have been removed, possibly due to a PAM Menu change or patch update. We will investigate and restore the required configuration.
 
-Please consider this as the formal handover for testing and proceed with validation of all three SQL clients.
-
-If any access-related issues or permission requests are identified during testing, we can address those separately as they arise.
-
-Please let us know if you encounter any issues during testing.
+We will continue to support any access or configuration-related issues identified during testing.
