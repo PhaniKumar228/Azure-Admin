@@ -1,15 +1,12 @@
-Subject: PFI - BUAT - MSSQL Handover Status Update
+We have completed all required fixes and validations for Invesco and GXDemo. With this, all three PFI BUAT MSSQL clients are now ready for testing.
 
-Hi <Manager Name>,
+Current Status
+✅ Lincoln National - Ready for testing
+✅ Invesco - All identified issues resolved and ready for testing
+✅ GXDemo - Ready for testing
 
-As discussed during Monday's call, all PFI - BUAT - MSSQL deliverables have been completed and delivered on time.
+Please consider this as the formal handover for testing and proceed with validation of all three SQL clients.
 
-Please find the final status below:
+If any access-related issues or permission requests are identified during testing, we can address those separately as they arise.
 
-Lincoln National: Complete and fully handed over.
-Invesco: Complete and fully handed over.
-GXDemo: Complete and fully handed over. There are currently no GRL applications mapped to GXDemo for testing; therefore, no application validation is pending.
-
-With all MSSQL BUAT activities completed and handed over, could you please coordinate with the respective application teams and proceed with the formal handover/sign-off of all Azure MSSQL BUAT items from our side?
-
-Please let me know if any additional information or support is required.
+Please let us know if you encounter any issues during testing.
