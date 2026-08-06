@@ -1,6 +1,17 @@
-Thanks for the update.
+Subject: Request for Production SPN Details and Key Vault Configuration
 
-Lincoln National: I will provide access similar to the other clients to support the testing activities.
-GXDemo: It appears the application entry may have been removed, possibly due to a PAM Menu change or patch update. We will investigate and restore the required configuration.
+Hi Team,
 
-We will continue to support any access or configuration-related issues identified during testing.
+We are currently in the final stage of PFI Production SQL Server testing.
+
+To complete the remaining validation activities, we require the SPN details used in Production, similar to the existing Production configuration.
+
+Could you please help us with:
+
+The Production SPN details.
+Confirmation of the associated service account.
+Vaulting the required credentials/secrets in Azure Key Vault (if not already available).
+
+Having these details will help us complete the testing and validation activities without delay.
+
+Please let us know if any additional information is required from our side.
