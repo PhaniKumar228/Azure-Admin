@@ -1,7 +1,11 @@
-Just wanted to follow up on the below item.
+Jira Update:
 
-Looping Sam in for visibility and to provide any additional inputs or guidance if needed.
+We had a quick discussion today and updated the permissions for the ID by changing the access from PSG to AppSupportGroup. We also selected "All" in Blotter to address the testing issue.
 
-Also, PROD testing is almost 90% complete. The remaining activity is to update the SPN details and perform the final round of validation/testing. Once completed, we should be in a good position to close out the testing.
+With these changes, the issue has been resolved, and we are now in a good position to proceed with testing.
 
-Please let us know if there are any updates.
+Resolution: This Jira can be closed as resolved.
+
+If any further testing blockers are identified, please raise a new Jira ticket with the relevant details.
+
+Thanks.
