@@ -1,17 +1,7 @@
-Subject: Request for Production SPN Details and Key Vault Configuration
+Just wanted to follow up on the below item.
 
-Hi Team,
+Looping Sam in for visibility and to provide any additional inputs or guidance if needed.
 
-We are currently in the final stage of PFI Production SQL Server testing.
+Also, PROD testing is almost 90% complete. The remaining activity is to update the SPN details and perform the final round of validation/testing. Once completed, we should be in a good position to close out the testing.
 
-To complete the remaining validation activities, we require the SPN details used in Production, similar to the existing Production configuration.
-
-Could you please help us with:
-
-The Production SPN details.
-Confirmation of the associated service account.
-Vaulting the required credentials/secrets in Azure Key Vault (if not already available).
-
-Having these details will help us complete the testing and validation activities without delay.
-
-Please let us know if any additional information is required from our side.
+Please let us know if there are any updates.
