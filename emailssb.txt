@@ -1,11 +1,5 @@
-Jira Update:
+Just for your information, we worked with the QA team today on testing for Lincoln National and Invesco.
 
-We had a quick discussion today and updated the permissions for the ID by changing the access from PSG to AppSupportGroup. We also selected "All" in Blotter to address the testing issue.
+The testing went well overall. A few minor issues were identified during testing, and we addressed them immediately. As of now, both applications are testing successfully, and there are no known issues.
 
-With these changes, the issue has been resolved, and we are now in a good position to proceed with testing.
-
-Resolution: This Jira can be closed as resolved.
-
-If any further testing blockers are identified, please raise a new Jira ticket with the relevant details.
-
-Thanks.
+If any additional issues are found during further testing, we will investigate and address them accordingly.
