@@ -1,5 +1,1 @@
-Just for your information, we worked with the QA team today on testing for Lincoln National and Invesco.
-
-The testing went well overall. A few minor issues were identified during testing, and we addressed them immediately. As of now, both applications are testing successfully, and there are no known issues.
-
-If any additional issues are found during further testing, we will investigate and address them accordingly.
+We will start working on this. Since the required steps need to be performed from scratch, we will begin shortly and share the status update once we make progress.
