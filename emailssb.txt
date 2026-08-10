@@ -1,1 +1,5 @@
-We will start working on this. Since the required steps need to be performed from scratch, we will begin shortly and share the status update once we make progress.
+Just following up to check if everything is going well with the Lincoln National and Invesco testing activities. Hope no further issues have been observed or reported.
+
+We also request that you start testing GXDemo at your earliest convenience and let us know if you encounter any issues or require any support from our side.
+
+Looking forward to your feedback.
