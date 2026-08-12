@@ -1,15 +1,5 @@
-Copilot said:
+As discussed with the ARO Team yesterday, the highlighted paths need to be modified from the Front End application and not through the portal.
 
-Subject: Azure PROD SPN Creation Requests Submitted
+We are currently in discussions with the ARO Team and are waiting for confirmation on the latest paths and the required changes. Once we receive confirmation, we will proceed accordingly.
 
-Hi Team,
-
-We have submitted the below RITMs for Azure Production SPN creation.
-
-RITM Details:
-
-RITM XXXXXXXX
-RITM XXXXXXXX
-RITM XXXXXXXX
-
-Please review the requests and let us know if any additional details or information are required from our side. We will be happy to provide them.
+We will keep you posted on the progress and share further updates as they become available.
