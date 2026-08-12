@@ -1,11 +1,5 @@
-We had a call with Yogesh yesterday, and below are the key takeaways from the discussion:
+Thanks for the approvals.
 
-Path Updates
+I will attach the approved documents/details to the request. Please proceed with the next steps from your end.
 
-We need to coordinate with the respective application teams to obtain the correct paths, as the path locations vary by application.
-Yogesh was unable to confirm the path details, as these are application-specific.
-
-Front-End Updates
-
-Based on the discussion, these path updates are currently being performed manually through the Front End application rather than through the portal/import process.
-Looping in Yogesh here. Please re-check this information and correct me if I am wrong.
+Let me know if any additional information is required.
