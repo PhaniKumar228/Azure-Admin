@@ -1,19 +1,11 @@
-Copilot said:
+We had a call with Yogesh yesterday, and below are the key takeaways from the discussion:
 
-Subject: Lincoln National Testing – Interface Settings Paths Pointing to PROD Locations
+Path Updates
 
-Hi Team,
+We need to coordinate with the respective application teams to obtain the correct paths, as the path locations vary by application.
+Yogesh was unable to confirm the path details, as these are application-specific.
 
-While testing, the QA team raised a bug for Lincoln National indicating that the Interface Settings paths are still pointing to PROD server locations. These paths need to be updated before we can proceed with further testing.
+Front-End Updates
 
-For Lincoln National, we exported the Interface Settings and identified the paths that require modification. However, all of these paths are new to us, and we are not sure what the corresponding BUAT/UAT paths should be.
-
-I have attached an Excel file containing all the path details identified during our review. There are 90+ paths that appear to require updates.
-
-Could you please review the attached file and provide the correct paths to be used?
-
-Additionally, please confirm whether it is acceptable to use the Import option to update all of these paths in one go, rather than modifying them individually through the application.
-
-Also, could you please add the ARO Team distribution list (DL) to this discussion? This will help us coordinate directly with the ARO team and the respective teams to obtain the correct path information and any additional details required to proceed.
-
-Once we receive the updated path information and confirmation on the preferred approach, we will proceed with the changes and continue testing.
+Based on the discussion, these path updates are currently being performed manually through the Front End application rather than through the portal/import process.
+Looping in Yogesh here. Please re-check this information and correct me if I am wrong.
