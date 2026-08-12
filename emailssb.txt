@@ -1,3 +1,15 @@
-We have completed the request submissions for SPN creation on the Production servers.
+Copilot said:
 
-Please find the corresponding RITM details below:
+Subject: Azure PROD SPN Creation Requests Submitted
+
+Hi Team,
+
+We have submitted the below RITMs for Azure Production SPN creation.
+
+RITM Details:
+
+RITM XXXXXXXX
+RITM XXXXXXXX
+RITM XXXXXXXX
+
+Please review the requests and let us know if any additional details or information are required from our side. We will be happy to provide them.
