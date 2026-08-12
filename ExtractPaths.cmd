@@ -1,23 +1,30 @@
-@echo off
-setlocal EnableDelayedExpansion
+$InputFile = "C:\Temp\LincolnNational.ini"
+$OutputCsv = "C:\Temp\PathDetails.csv"
 
-set "InputFile=LincolnNational.ini"
-set "OutputFile=PathDetails.txt"
+$Section = ""
+$Results = @()
 
-if exist "%OutputFile%" del "%OutputFile%"
+Get-Content $InputFile | ForEach-Object {
 
-for /f "usebackq delims=" %%L in ("%InputFile%") do (
-    set "line=%%L"
+    if ($_ -match '^\[(.*?)\]$') {
+        $Section = $Matches[1]
+    }
 
-    echo !line! | findstr /r "^\[.*\]$" >nul
-    if !errorlevel! == 0 (
-        set "section=!line!"
-    )
+    elseif ($_ -match '^([^=]+)=(.+)$') {
 
-    echo !line! | find "\" >nul
-    if !errorlevel! == 0 (
-        echo !section! - !line!>>"%OutputFile%"
-    )
-)
+        $Key = $Matches[1].Trim()
+        $Value = $Matches[2].Trim()
 
-echo Done. Output saved to %OutputFile%
+        if ($Value -[=(match '^[A-Za-z]:^\\\\') {
+            $Results += [PSCustomObject]@{
+                Section = $Section
+                Setting = $Key
+                Path    = $Value
+            }
+        }
+    }
+}
+
+$Results | Export-Csv $OutputCsv -NoTypeInformation
+
+Write-Host "CSV created: $OutputCsv"
