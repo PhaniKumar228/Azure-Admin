@@ -1,30 +1,24 @@
-$InputFile = "C:\Temp\LincolnNational.ini"
-$OutputCsv = "C:\Temp\PathDetails.csv"
+$Section=""
 
-$Section = ""
-$Results = @()
+Get-Content "C:\Temp\LincolnNational.ini" | ForEach-Object {
 
-Get-Content $InputFile | ForEach-Object {
-
-    if ($_ -match '^\[(.*?)\]$') {
+    if ($_ -match '^\[(.+)\]$') {
         $Section = $Matches[1]
     }
 
-    elseif ($_ -match '^([^=]+)=(.+)$') {
+    elseif ($_ -match '^(.+?)=(.+)$') {
 
-        $Key = $Matches[1].Trim()
-        $Value = $Matches[2].Trim()
+        $Name  = $Matches[1]
+        $Value = $Matches[2]
 
-        if ($Value -[=(match '^[A-Za-z]:^\\\\') {
-            $Results += [PSCustomObject]@{
+        if ($Value -like "\\*" -or $Value -match "^[A-Za-z]:\\") {
+
+            [PSCustomObject]@{
                 Section = $Section
-                Setting = $Key
-                Path    = $Value
+                Property = $Name
+                Path = $Value
             }
         }
     }
-}
 
-$Results | Export-Csv $OutputCsv -NoTypeInformation
-
-Write-Host "CSV created: $OutputCsv"
+} | Export-Csv "C:\Temp\PathDetails.csv" -NoTypeInformation
