@@ -1,5 +1,13 @@
-Thanks for the approvals.
+We want to confirm that we are following the correct approach for the Lincoln National PROD deployment.
 
-I will attach the approved documents/details to the request. Please proceed with the next steps from your end.
+Based on our understanding:
 
-Let me know if any additional information is required.
+Shortcut: Only one shortcut is required. During DR activities or server switchovers, we will update the Primary, Secondary, and Report Server names in the shortcut properties.
+LINCPAM INI Files:
+Primary Server: LINCPAM.ini
+Secondary Server: LINCPAM_Sec.ini
+Upgrade INI File:
+A single LINCPAM.upgrade.ini file will be used for all three servers.
+Before running the ZAP process, we will update the server name, user details, and other required settings as needed.
+
+Could you please confirm whether this approach is correct, or let us know if we are missing anything or heading in the wrong direction?
