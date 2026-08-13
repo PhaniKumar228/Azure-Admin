@@ -1,15 +1,15 @@
 Copilot said:
 
-Subject: Lincoln National SOP Review and Confirmation
+Subject: Assistance Required for Lincoln National PROD ZAP Issue
 
 Hi Team,
 
-As discussed during the last ARO call, we are sharing the Lincoln National SOP for your review.
+We are currently performing the Lincoln National PROD ZAP process and have encountered the issue detailed below.
 
-Could you please review the document and confirm whether the approach is correct? Once approved, we plan to follow the same process for all three SQL clients:
+Our team has already worked with the ARO team to investigate and troubleshoot the problem; however, we have not been able to identify a resolution so far.
 
-Lincoln National
-Invesco
-GXDemo
+Therefore, we are reaching out to seek your assistance. Would you have a few minutes to help us review and troubleshoot this issue, either today or tomorrow, at your convenience?
 
-Please let us know if any changes or corrections are required.
+Please let us know your availability, and we will be happy to coordinate.
+
+Thank you for your support.
