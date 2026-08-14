@@ -1,15 +1,5 @@
-Copilot said:
+We will start working on this on priority.
 
-Subject: Assistance Required for Lincoln National PROD ZAP Issue
+However, we are currently addressing multiple issues identified in the PROD environment following the upgrade, and the team is actively working on resolving them. At this stage, we cannot confirm whether we will be able to complete the AZ BUAT Invesco upgrade before US business hours.
 
-Hi Team,
-
-We are currently performing the Lincoln National PROD ZAP process and have encountered the issue detailed below.
-
-Our team has already worked with the ARO team to investigate and troubleshoot the problem; however, we have not been able to identify a resolution so far.
-
-Therefore, we are reaching out to seek your assistance. Would you have a few minutes to help us review and troubleshoot this issue, either today or tomorrow, at your convenience?
-
-Please let us know your availability, and we will be happy to coordinate.
-
-Thank you for your support.
+We will continue to prioritize this request and keep you updated on the progress and expected timelines.
