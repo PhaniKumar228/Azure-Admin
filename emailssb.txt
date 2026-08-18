@@ -1,5 +1,19 @@
-We will start working on this on priority.
+Copilot said:
 
-However, we are currently addressing multiple issues identified in the PROD environment following the upgrade, and the team is actively working on resolving them. At this stage, we cannot confirm whether we will be able to complete the AZ BUAT Invesco upgrade before US business hours.
+Subject: Approval Required for SailPoint Entitlement Access for Upcoming DR Activity
 
-We will continue to prioritize this request and keep you updated on the progress and expected timelines.
+Hi Team,
+
+We have submitted a SailPoint request to obtain access to the required entitlement; however, the request was denied.
+
+Could you please review and approve this request, as the access is required for the upcoming DR activity?
+
+I have looped in my managers and Tristan on this email in case any additional information, justification, or approvals are needed from our side.
+
+Your support in expediting this request would be greatly appreciated.
+
+Thank you.
+
+Regards,
+ Phanikumar Bellamkonda
+ Expert Database Administrator
