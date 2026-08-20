@@ -1,19 +1,21 @@
-Copilot said:
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'MHFSHDR'
+AND COLUMN_NAME = 'PurificationFee';
 
-Subject: Approval Required for SailPoint Entitlement Access for Upcoming DR Activity
+ALTER TABLE MHFSHDR
+ADD PurificationFee ...
 
-Hi Team,
 
-We have submitted a SailPoint request to obtain access to the required entitlement; however, the request was denied.
+SELECT *
+FROM PAMVERSION;
 
-Could you please review and approve this request, as the access is required for the upcoming DR activity?
+EXEC sp_help 'MHFSHDR';
 
-I have looped in my managers and Tristan on this email in case any additional information, justification, or approvals are needed from our side.
-
-Your support in expediting this request would be greatly appreciated.
-
-Thank you.
-
-Regards,
- Phanikumar Bellamkonda
- Expert Database Administrator
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    CHARACTER_MAXIMUM_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'MHFSHDR'
+ORDER BY ORDINAL_POSITION;
