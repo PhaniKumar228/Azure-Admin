@@ -1,1 +1,3 @@
-We will add the service account to PFI. Once it is added, you can test it from the Application Server and let us know if there are any issues.
+Get-ChildItem "C:\PFS" -Recurse -Include *.xml,*.config,*.ini |
+2
+Select-String "Yes|No|Y|N|0|1"
