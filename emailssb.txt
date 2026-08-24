@@ -1,3 +1,17 @@
-Get-ChildItem "C:\PFS" -Recurse -Include *.xml,*.config,*.ini |
-2
-Select-String "Yes|No|Y|N|0|1"
+Copilot said:
+
+Subject: Request for Job End Time Details for All Clients
+
+Hi Manoj and Sai Sandeep,
+
+Hope you are doing well.
+
+We need your assistance in populating the "Job End Time" column for each client in our tracking sheet.
+
+Could you please review the SQL job list and provide the corresponding job end times for all applicable clients? This information is required to complete our documentation and ensure the tracker is up to date.
+
+Kindly update the details at your earliest convenience and let us know if any clarification is needed.
+
+CC'ing Phil Feeny, Arun, and our team for visibility.
+
+Thank you for your support.
