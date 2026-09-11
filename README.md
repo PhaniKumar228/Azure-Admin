@@ -1,1 +1,1 @@
-# Azure-Admin
+We updated the BUAT Azure MI configuration, but the tests are failing. The application requires a username/password to connect to SQL, and using the Entra ID group alone is waiting for credential resolution, resulting in connectivity failures. Would it be possible to create a dedicated Service Principal (SPN) or Azure AD service account for ZAP and use that account for the upgrade and testing activities?
