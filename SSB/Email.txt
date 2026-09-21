@@ -1,39 +1,21 @@
-Short Description
+Sure Sam.
 
-Azure SQL Managed Instance Migration - Permission Replication Assessment
+Issue Summary: After enabling Entra ID Authentication in BUAT and disabling SQL Authentication, we tested the ZAP Utility for the SalesDemo application. However, the utility was not picking up the SPN credentials correctly and appeared to still expect a password.
 
-Request application/database teams to execute the attached permission extraction scripts on the source SQL Server databases and share the output in Excel format. The collected permission details will be used to validate and replicate existing security configurations in Azure SQL Managed Instance (MI) after migration.
+Naina and I tested multiple authentication combinations, including:
 
-Notes
+UserID + Password
+PAMUserID + DBCredentials
+Direct password authentication
+.bin file authentication
 
-Please run the attached permission extraction scripts and provide the output in Excel format for the following databases:
+We tried all available combinations (approximately 6 different scenarios), but none were successful.
 
-Server Name	Database NameNTVPWVC0366	LINCPAM
-NTVPWVC0366	T1PAM
-NTVPWVC0365	IVSCPAM
+Current Status:
 
-A separate script has been provided for each database.
+Naina has raised a bug with the Development Team.
+During the troubleshooting call, Naina confirmed that this is a known compatibility issue with SPN authentication in the ZAP Utility.
+The Development Team is planning to release a patch on 26-Sep to address this issue.
+We are currently waiting for the patch release and will perform validation testing once it becomes available.
 
-The output should include:
-
-Database Users
-Database Roles
-Role Memberships
-Object-Level Permissions
-Database-Level Permissions
-Schema Permissions (if applicable)
-
-This information will be used to ensure all required permissions are replicated accurately in Azure SQL Managed Instance following migration.
-
-Additional Notes
-Please execute the scripts before the migration window.
-Share the results in Excel format (.xlsx) with separate tabs for each script output.
-Any custom roles, service accounts, application logins, or elevated permissions should be highlighted.
-If any permission-related issues or execution errors are encountered, please notify the migration team immediately.
-Security validation will be performed post-migration based on the submitted output.
-Scripts
-LINCPAM Permission Extraction Script (Server: NTVPWVC0366)
-T1PAM Permission Extraction Script (Server: NTVPWVC0366)
-IVSCPAM Permission Extraction Script (Server: NTVPWVC0365)
-
-Requested Deliverable: One Excel workbook containing permission details for all three databases.
+At this point, the PFI BUAT upgrade activity remains on hold pending patch release and successful testing.
