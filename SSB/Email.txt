@@ -1,21 +1,10 @@
-Sure Sam.
-
-Issue Summary: After enabling Entra ID Authentication in BUAT and disabling SQL Authentication, we tested the ZAP Utility for the SalesDemo application. However, the utility was not picking up the SPN credentials correctly and appeared to still expect a password.
-
-Naina and I tested multiple authentication combinations, including:
-
-UserID + Password
-PAMUserID + DBCredentials
-Direct password authentication
-.bin file authentication
-
-We tried all available combinations (approximately 6 different scenarios), but none were successful.
-
-Current Status:
-
-Naina has raised a bug with the Development Team.
-During the troubleshooting call, Naina confirmed that this is a known compatibility issue with SPN authentication in the ZAP Utility.
-The Development Team is planning to release a patch on 26-Sep to address this issue.
-We are currently waiting for the patch release and will perform validation testing once it becomes available.
-
-At this point, the PFI BUAT upgrade activity remains on hold pending patch release and successful testing.
+SELECT 
+    session_id AS [Session ID],
+    command AS [Operation Type],
+    percent_complete AS [Progress Percentage],
+    estimated_completion_time / 1000 / 60 AS [Estimated Minutes Left],
+    DATEADD(ms, estimated_completion_time, GETDATE()) AS [Estimated Completion Time],
+    text AS [Query Text]
+FROM sys.dm_exec_requests
+CROSS APPLY sys.dm_exec_sql_text(sql_handle)
+WHERE command IN ('BACKUP DATABASE', 'RESTORE DATABASE', 'BACKUP LOG', 'RESTORE LOG');
