@@ -1,10 +1,52 @@
-SELECT 
-    s.name AS SchemaName,
-    t.name AS TableName
-FROM 
-    sys.tables AS t
-INNER JOIN 
-    sys.schemas AS s ON t.schema_id = s.schema_id
-ORDER BY 
-    SchemaName, 
-    TableName;
+-- ============================================================
+-- Dynamically generates INSERT statements for [mhfshdr]
+-- Run this in SSMS on the SOURCE server
+-- Copy the output and run it on the TARGET server
+-- ============================================================
+
+DECLARE @TableName   NVARCHAR(256) = N'mhfshdr'
+DECLARE @SchemaName  NVARCHAR(256) = N'dbo'
+DECLARE @DBName      NVARCHAR(256) = N'IVSCPAM'
+DECLARE @ColList     NVARCHAR(MAX) = N''
+DECLARE @ValList     NVARCHAR(MAX) = N''
+DECLARE @SQL         NVARCHAR(MAX) = N''
+
+-- Build column list and value expressions dynamically
+SELECT
+    @ColList = @ColList + N'[' + COLUMN_NAME + N'], ',
+    @ValList = @ValList +
+        CASE
+            -- Numeric types: no quotes
+            WHEN DATA_TYPE IN ('int','bigint','smallint','tinyint',
+                                  'decimal','numeric','float','real',
+                                  'money','smallmoney','bit')
+            THEN N'ISNULL(CAST([' + COLUMN_NAME + N'] AS NVARCHAR(MAX)),''NULL'')'
+
+            -- Date/time types: quoted
+            WHEN DATA_TYPE IN ('date','datetime','datetime2',
+                                  'smalldatetime','time','datetimeoffset')
+            THEN N'ISNULL(''''''''+CONVERT(NVARCHAR(50),[' + COLUMN_NAME + N'],121)+'''''''',''NULL'')'
+
+            -- String types: quoted + escape inner quotes
+            ELSE
+                N'ISNULL(''''''''+REPLACE(CAST([' + COLUMN_NAME + N'] AS NVARCHAR(MAX)),
+                N"''''''",
+                N"''''''''''")+'''''''',''NULL'')'
+        END + N'+'''','''+'
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME   = @TableName
+  AND TABLE_SCHEMA = @SchemaName
+ORDER BY ORDINAL_POSITION
+
+-- Trim trailing commas
+SET @ColList = LEFT(@ColList, LEN(@ColList) - 1)
+SET @ValList = LEFT(@ValList, LEN(@ValList) - 9)
+
+-- Build and execute the final SELECT
+SET @SQL = N'SELECT ''INSERT INTO [IVSCPAM].[dbo].[mhfshdr] ('
+         + @ColList
+         + N') VALUES ('' + '
+         + @ValList
+         + N' + '')'' FROM [IVSCPAM].[dbo].[mhfshdr]'
+
+EXEC sp_executesql @SQL
