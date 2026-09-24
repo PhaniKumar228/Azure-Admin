@@ -1,10 +1,10 @@
 SELECT 
-    session_id AS [Session ID],
-    command AS [Operation Type],
-    percent_complete AS [Progress Percentage],
-    estimated_completion_time / 1000 / 60 AS [Estimated Minutes Left],
-    DATEADD(ms, estimated_completion_time, GETDATE()) AS [Estimated Completion Time],
-    text AS [Query Text]
-FROM sys.dm_exec_requests
-CROSS APPLY sys.dm_exec_sql_text(sql_handle)
-WHERE command IN ('BACKUP DATABASE', 'RESTORE DATABASE', 'BACKUP LOG', 'RESTORE LOG');
+    s.name AS SchemaName,
+    t.name AS TableName
+FROM 
+    sys.tables AS t
+INNER JOIN 
+    sys.schemas AS s ON t.schema_id = s.schema_id
+ORDER BY 
+    SchemaName, 
+    TableName;
