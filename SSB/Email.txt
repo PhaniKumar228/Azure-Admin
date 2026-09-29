@@ -1,3 +1,8 @@
-This activity has been rescheduled to tomorrow. We will share more details by the end of today (EOD).
+I have verified all three SQL servers from the shortcut environment, and we are able to launch all PROD shortcuts successfully.
 
-Additionally, as per the process, the Migration Team should receive the patch first from the KC Bus System Team before proceeding with the activity.
+Could you please share some additional details regarding the issue?
+
+Which application is experiencing the problem?
+Are there any error logs, screenshots, or application paths available for review?
+
+I have attached the latest snapshot of the PROD PFI status for reference.
