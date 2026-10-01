@@ -1,18 +1,1 @@
-Update:
-
-Issue identified with 3 PSG/GRL applications where Lincoln National details are not visible, and some applications are configured to point to TEST2 instead of PROD.
-
-Actions Taken:
-• Ensono DBA team reviewed the PFI SQL applications and validated SQL connectivity and database functionality.
-• Successfully launched applications and confirmed data is accessible from the SQL environment.
-• Investigation determined the issue is related to PSG/GRL application configuration files, not the database or SQL infrastructure.
-• Missing client configuration and incorrect environment references (TEST2 vs PROD) were identified.
-
-Next Steps:
-• GRL application team to update the configuration files to:
-  - Point Lincoln National configurations to PROD.
-  - Add the missing client configuration entries.
-• Revalidate application functionality after configuration changes are completed.
-
-Note:
-If SQL connectivity issues persist after the configuration updates are implemented, please engage the Ensono DBA team for further investigation and support.
+Got KT from Sabine on Upgrade, Patch, and Post-Build activities. Will start working on the server from tomorrow. Meanwhile, I'll close a few pending tasks today.
