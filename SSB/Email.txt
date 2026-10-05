@@ -1,3 +1,13 @@
-We are now able to access the server, and the restore activity will be completed later today.
+Tape Backup Retrieval for Database Restore
 
-We will provide an update here once the restore process has been successfully completed.
+Hi Team,
+
+Please submit a request to retrieve the tape backup for the below database restore requirement:
+
+Server: USE1UWVC0061
+Target Database: mttracs_RI
+Backup Date Required: 09/14/2026
+
+The backup is currently stored on tape and is required for the database restore activity.
+
+Please let us know once the tape backup files are available.
