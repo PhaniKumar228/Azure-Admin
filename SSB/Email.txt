@@ -1,25 +1,3 @@
-Add Server to GMSA AD Group
-Reboot VM
-Apply GMSA Account to SQL Services
-Configure SQL Service Startup Validation
-Setup HADR Configuration
-Validate HADR Health
-Onboard Server to CyberArk
-Configure CAPAM Integration
-Onboard Server to APMD
-Install SSL Certificate
-Validate SSL Certificate
-Update CMDB
-Configure Autosys Jobs
-Validate Autosys Connectivity
-Configure Monitoring Alerts
-Update Backup Configuration
-Validate Backup Execution
-Configure Maintenance Jobs
-Perform Smoke Testing
-Application Connectivity Validation
-Security Compliance Validation
-DR Readiness Validation
-Documentation Update
-Operational Handover
-Final Sign-off
+We are now able to access the server, and the restore activity will be completed later today.
+
+We will provide an update here once the restore process has been successfully completed.
