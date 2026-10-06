@@ -1,43 +1,13 @@
-DECLARE @DBName SYSNAME,
-        @BackupPath VARCHAR(500) = 'D:\SQLBackups\',
-        @DateStamp VARCHAR(20),
-        @SQL NVARCHAR(MAX);
-
-SET @DateStamp = REPLACE(CONVERT(VARCHAR(19), GETDATE(), 120), ':', '');
-SET @DateStamp = REPLACE(@DateStamp, '-', '');
-SET @DateStamp = REPLACE(@DateStamp, ' ', '_');
-
-DECLARE db_cursor CURSOR FOR
-SELECT name
-FROM sys.databases
-WHERE state_desc = 'ONLINE';
-
-OPEN db_cursor;
-FETCH NEXT FROM db_cursor INTO @DBName;
-
-WHILE @@FETCH_STATUS = 0
-BEGIN
-
-    SET @SQL = '
-    BACKUP DATABASE [' + @DBName + ']
-    TO
-      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_1.bak'',
-      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_2.bak'',
-      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_3.bak'',
-      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_4.bak'',
-      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_5.bak''
-    WITH
-      FORMAT,
-      INIT,
-      COMPRESSION,
-      CHECKSUM,
-      STATS = 10;';
-
-    PRINT @SQL;
-    EXEC (@SQL);
-
-    FETCH NEXT FROM db_cursor INTO @DBName;
-END
-
-CLOSE db_cursor;
-DEALLOCATE db_cursor;
+SELECT
+    d.name AS DatabaseName,
+    d.recovery_model_desc,
+    MAX(CASE WHEN bs.type = 'D' THEN bs.backup_finish_date END) AS LastFullBackup,
+    MAX(CASE WHEN bs.type = 'I' THEN bs.backup_finish_date END) AS LastDiffBackup,
+    MAX(CASE WHEN bs.type = 'L' THEN bs.backup_finish_date END) AS LastLogBackup
+FROM sys.databases d
+LEFT JOIN msdb.dbo.backupset bs
+    ON d.name = bs.database_name
+GROUP BY
+    d.name,
+    d.recovery_model_desc
+ORDER BY d.name;
