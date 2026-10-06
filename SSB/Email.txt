@@ -1,5 +1,1 @@
-Has anyone faced this error during an upgrade before?
-
-I encountered this issue on the BUAT ARH application server. As part of troubleshooting, I tried changing the services to run under the Local System account and performed some testing. However, I am unable to update the service account successfully.
-
-If anyone has seen a similar issue
+This is mainly an upgrade issue. I haven't changed the service account. I only tried switching the service to Local System for troubleshooting, but I'm unable to update the service account itself, so I couldn't complete the test.
