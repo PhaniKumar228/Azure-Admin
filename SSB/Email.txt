@@ -1,22 +1,5 @@
-SELECT
-    s.name AS SessionName,
-    t.target_name,
-    CAST(t.target_data AS XML) AS TargetData
-FROM sys.server_event_sessions s
-JOIN sys.server_event_session_targets t
-    ON s.event_session_id = t.event_session_id
-WHERE t.target_name = 'event_file';
+Has anyone faced this error during an upgrade before?
 
+I encountered this issue on the BUAT ARH application server. As part of troubleshooting, I tried changing the services to run under the Local System account and performed some testing. However, I am unable to update the service account successfully.
 
-ALTER EVENT SESSION [MySession]
-ON SERVER
-STATE = STOP;
-GO
-
-DROP EVENT SESSION [MySession]
-ON SERVER;
-GO
-
-SELECT name
-FROM sys.server_event_sessions
-ORDER BY name;
+If anyone has seen a similar issue
