@@ -1,13 +1,43 @@
-Tape Backup Retrieval for Database Restore
+DECLARE @DBName SYSNAME,
+        @BackupPath VARCHAR(500) = 'D:\SQLBackups\',
+        @DateStamp VARCHAR(20),
+        @SQL NVARCHAR(MAX);
 
-Hi Team,
+SET @DateStamp = REPLACE(CONVERT(VARCHAR(19), GETDATE(), 120), ':', '');
+SET @DateStamp = REPLACE(@DateStamp, '-', '');
+SET @DateStamp = REPLACE(@DateStamp, ' ', '_');
 
-Please submit a request to retrieve the tape backup for the below database restore requirement:
+DECLARE db_cursor CURSOR FOR
+SELECT name
+FROM sys.databases
+WHERE state_desc = 'ONLINE';
 
-Server: USE1UWVC0061
-Target Database: mttracs_RI
-Backup Date Required: 09/14/2026
+OPEN db_cursor;
+FETCH NEXT FROM db_cursor INTO @DBName;
 
-The backup is currently stored on tape and is required for the database restore activity.
+WHILE @@FETCH_STATUS = 0
+BEGIN
 
-Please let us know once the tape backup files are available.
+    SET @SQL = '
+    BACKUP DATABASE [' + @DBName + ']
+    TO
+      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_1.bak'',
+      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_2.bak'',
+      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_3.bak'',
+      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_4.bak'',
+      DISK = ''' + @BackupPath + @DBName + '_' + @DateStamp + '_5.bak''
+    WITH
+      FORMAT,
+      INIT,
+      COMPRESSION,
+      CHECKSUM,
+      STATS = 10;';
+
+    PRINT @SQL;
+    EXEC (@SQL);
+
+    FETCH NEXT FROM db_cursor INTO @DBName;
+END
+
+CLOSE db_cursor;
+DEALLOCATE db_cursor;
