@@ -5,3 +5,22 @@ SELECT
 FROM sys.server_event_sessions s
 JOIN sys.server_event_session_targets t
     ON s.event_session_id = t.event_session_id;
+
+
+SELECT
+    s.name,
+    CAST(t.target_data AS XML)
+FROM sys.server_event_sessions s
+INNER JOIN sys.server_event_session_targets t
+    ON s.event_session_id = t.event_session_id
+WHERE t.target_name = 'event_file';
+
+
+ALTER EVENT SESSION [SessionName]
+ON SERVER
+STATE = STOP;
+GO
+
+DROP EVENT SESSION [SessionName]
+ON SERVER;
+GO
