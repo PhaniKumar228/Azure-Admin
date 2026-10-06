@@ -1,13 +1,178 @@
-SELECT
-    d.name AS DatabaseName,
-    d.recovery_model_desc,
-    MAX(CASE WHEN bs.type = 'D' THEN bs.backup_finish_date END) AS LastFullBackup,
-    MAX(CASE WHEN bs.type = 'I' THEN bs.backup_finish_date END) AS LastDiffBackup,
-    MAX(CASE WHEN bs.type = 'L' THEN bs.backup_finish_date END) AS LastLogBackup
-FROM sys.databases d
-LEFT JOIN msdb.dbo.backupset bs
-    ON d.name = bs.database_name
-GROUP BY
-    d.name,
-    d.recovery_model_desc
-ORDER BY d.name;
+USE [master]
+GO
+IF OBJECT_ID ('fn_hexadecimal') IS NOT NULL
+DROP function fn_hexadecimal
+GO
+CREATE FUNCTION [dbo].[fn_hexadecimal]
+(
+    -- Add the parameters for the function here
+     @binvalue varbinary(256)
+)
+RETURNS VARCHAR(256)
+AS
+BEGIN
+ 
+    DECLARE @thisissaroracharvalue varchar(1000)
+    DECLARE @i int
+    DECLARE @length int
+    DECLARE @hexstring char(16)
+    SELECT @charvalue = '0x'
+    SELECT @i = 1
+    SELECT @length = DATALENGTH (@binvalue)
+    SELECT @hexstring = '0123456789ABCDEF'
+    WHILE (@i <= @length)
+    BEGIN
+      DECLARE @tempint int
+      DECLARE @firstint int
+      DECLARE @secondint int
+      SELECT @tempint = CONVERT(int, SUBSTRING(@binvalue,@i,1))
+      SELECT @firstint = FLOOR(@tempint/16)
+      SELECT @secondint = @tempint - (@firstint*16)
+      SELECT @charvalue = @charvalue +
+        SUBSTRING(@hexstring, @firstint+1, 1) +
+        SUBSTRING(@hexstring, @secondint+1, 1)
+      SELECT @i = @i + 1
+    END
+    return @charvalue
+ 
+END
+GO
+ 
+ 
+SET NOCOUNT ON
+GO
+--use MASTER
+GO
+PRINT '-----------------------------------------------------------------------------'
+PRINT '-- Script created on ' + CAST(GETDATE() AS VARCHAR(100))
+PRINT '-----------------------------------------------------------------------------'
+PRINT ''
+PRINT '-----------------------------------------------------------------------------'
+PRINT '-- Create the windows logins'
+PRINT '-----------------------------------------------------------------------------'
+SELECT 'IF NOT EXISTS (SELECT * FROM master.sys.server_principals WHERE [name] = ''' + [name] + ''')
+    CREATE LOGIN [' + [name] + '] FROM WINDOWS WITH DEFAULT_DATABASE=[' +
+        default_database_name + '], DEFAULT_LANGUAGE=[us_english]
+GO
+ 
+'
+FROM master.sys.server_principals
+where type_desc In ('WINDOWS_GROUP', 'WINDOWS_LOGIN')
+AND [name] not like 'BUILTIN%'
+and [NAME] not like 'NT AUTHORITY%'
+and [name] not like '%\SQLServer%'
+GO
+ 
+PRINT '-----------------------------------------------------------------------------'
+PRINT '-- Create the SQL Logins'
+PRINT '-----------------------------------------------------------------------------'
+select 'IF NOT EXISTS (SELECT * FROM master.sys.sql_logins WHERE [name] = ''' + [name] + ''')
+CREATE LOGIN [' + [name] + '] WITH PASSWORD=' + [master].[dbo].[fn_hexadecimal](password_hash) + ' HASHED, SID = ' + [master].[dbo].[fn_hexadecimal]([sid]) + ', DEFAULT_DATABASE=[' + default_database_name + '], DEFAULT_LANGUAGE=[us_english], CHECK_EXPIRATION=' + CASE WHEN is_expiration_checked = 1 THEN 'ON' ELSE 'OFF' END + ', CHECK_POLICY=OFF
+GO
+IF EXISTS (SELECT * FROM master.sys.sql_logins WHERE [name] = ''' + [name] + ''')
+ALTER LOGIN [' + [name] + '] WITH CHECK_EXPIRATION=' + CASE WHEN is_expiration_checked = 1 THEN 'ON' ELSE 'OFF' END + ', CHECK_POLICY=' + CASE WHEN is_policy_checked = 1 THEN 'ON' ELSE 'OFF' END + '
+GO
+'
+--[name], [sid] , password_hash
+from master.sys.sql_logins
+where type_desc = 'SQL_LOGIN'
+and [name] not in ('sa', 'guest')
+ 
+PRINT '-----------------------------------------------------------------------------'
+PRINT '-- Disable any logins'
+PRINT '-----------------------------------------------------------------------------'
+SELECT 'ALTER LOGIN [' + [name] + '] DISABLE
+GO
+'
+from master.sys.server_principals
+where is_disabled = 1
+ 
+PRINT '-----------------------------------------------------------------------------'
+PRINT '-- Assign groups'
+PRINT 'GO'
+PRINT '-----------------------------------------------------------------------------'
+select
+'EXEC master..sp_addsrvrolemember @loginame = N''' + l.name + ''', @rolename = N''' + r.name + '''
+GO
+ 
+'
+from master.sys.server_role_members rm
+join master.sys.server_principals r on r.principal_id = rm.role_principal_id
+join master.sys.server_principals l on l.principal_id = rm.member_principal_id
+where l.[name] not in ('sa')
+AND l.[name] not like 'BUILTIN%'
+and l.[NAME] not like 'NT AUTHORITY%'
+and l.[name] not like '%\SQLServer%'
+
+
+############
+
+/*
+This will script out all permissions on source.
+ 
+Description - This Script has be run on source and then Save the output to a file and run the output on destination server.
+ 
+ 
+Note: In SSMS, check the “Maximum number of characters displayed in each column” settings before executing the below script. It is defaulted to 256 characters.
+ 
+Tools » Options » Query Results » Results to Text » Maximum number of characters displayed in each column
+ 
+Also check the "Maximum Characters Retrieved" under "Results to Grid" section.
+ 
+ 
+Make sure you open a new query window and execute the script after changing the "Maximum number of characters displayed in each column” setting.
+*/
+ 
+ 
+set nocount on
+ 
+/*Grant All Databases Access Script*/
+ 
+Print '---------------------------------Script Grant All DB Access---------------------------------------'
+Print '--------------------------------------------------------------------------------------------------'
+ 
+exec sp_msforeachdb 'Use ? select ''Use '' + ''?'' + CHAR(13) + CHAR(10)+ ''GO''
++ CHAR(13) + CHAR(10) + ''if not exists (select * from dbo.sysusers where name = N''''''+''''+usu.name+'''''')''+ Char(13) + Char(10) +   
+''EXEC sp_grantdbaccess N''''''+ lo.loginname collate database_default +  '''''''' + '',N''''''+ usu.name collate database_default+ ''''''''  +char(13) + char(10) + ''GO''
+from sysusers usu , master.dbo.syslogins lo where usu.sid = lo.sid and (usu.islogin = 1 and usu.isaliased = 0 and usu.hasdbaccess = 1)'
+ 
+Print '--------------------------------Grant All DB Access Script Complete for All DB---------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+/*Add Roles to All Databases Script*/
+ 
+Print '-------------------------------Script Adding Roles All Databases-----------------------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+exec sp_msforeachdb 'Use ? select ''Use '' + ''?'' + CHAR(13) + CHAR(10)+ ''GO''
++ CHAR(13) + CHAR(10) + ''if not exists (select *  from dbo.sysusers where name = N''''''+ name +'''''' )'' + Char(13) + Char(10) +
+''EXEC sp_addrole N'''''' + name collate database_default +  '''''''' + Char(13) + Char(10) + ''GO''
+from sysusers where uid > 0 and uid=gid and issqlrole=1'
+ 
+Print '--------------------------------Adding Roles Script Complete for All DB----------------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+/*Add Role Members All Databases Script */
+ 
+Print '-------------------------------Script Role Members All Databases-----------------------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+exec sp_msforeachdb 'Use ? select ''Use '' + ''?'' + CHAR(13) + CHAR(10)+ ''GO''+ CHAR(13) + CHAR(10) +
+''exec sp_addrolemember N'''''' + user_name(groupuid) collate database_default + ''''''''+ '',N'''''' + user_name (memberuid) collate database_default + '''''''' + Char(13) + Char(10) + ''GO''
+from sysmembers where  user_name (memberuid) <> ''dbo'' order by groupuid'
+ 
+Print '-----------------------------Adding Role Members Script Complete for All DB------------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+/*Add Alias Login All Databases*/
+ 
+Print '------------------------------Script Add Alias All Databases---------------------------------------'
+Print '---------------------------------------------------------------------------------------------------'
+ 
+exec sp_msforeachdb 'Use ? select ''Use '' + ''?'' + CHAR(13) + CHAR(10)+ ''GO''
++ CHAR(13) + CHAR(10) + ''if not exists (select * from dbo.sysusers where name = N''''''+''''+ a.name +'''''')'' + Char(13) + Char(10) +
+''EXEC sp_addalias N'''''' + substring(a.name , 2, len(a.name)) collate database_default +''''''''+ '',N''''''+ b.name collate database_default +  '''''''' + Char(13) + Char(10) +''GO''
+from sysusers a , sysusers b where a.altuid = b.uid and a.isaliased=1'
+ 
+Print '------------------------------Add Alias Script Complete for All DB---------------------------------'
+Print '---------------------------------------------------------------------------------------------------'
