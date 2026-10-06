@@ -1,1 +1,15 @@
-This is mainly an upgrade issue. I haven't changed the service account. I only tried switching the service to Local System for troubleshooting, but I'm unable to update the service account itself, so I couldn't complete the test.
+Subject: Assistance Required for SQL Client Patch Reapplication – Invesco/GXDemo
+
+Hi Team,
+
+We are planning to re-apply Patch-06 on the SQL Clients for Invesco/GXDemo tomorrow.
+
+Before the previous upgrade, Entra ID authentication was enabled, which subsequently caused issues with Always On Availability Group synchronization on the secondary replica. To avoid similar issues during the upcoming activity, we would like to disable Entra ID before the upgrade and re-enable it after the upgrade is completed.
+
+This is related to the currently broken AG configuration in Azure MI, and we want to ensure the patching activity proceeds smoothly.
+
+Additionally, could you please confirm if there have been any recent changes made in the Azure HR region that we should be aware of?
+
+We will require your assistance to disable and re-enable Entra ID for approximately 60-70 minutes during the maintenance window.
+
+Please let us know your availability and any considerations before we proceed.
