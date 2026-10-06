@@ -1,36 +1,22 @@
 SELECT
-    s.name,
+    s.name AS SessionName,
     t.target_name,
-    CAST(t.target_data AS XML) AS target_data
+    CAST(t.target_data AS XML) AS TargetData
 FROM sys.server_event_sessions s
 JOIN sys.server_event_session_targets t
-    ON s.event_session_id = t.event_session_id;
-
-
-SELECT
-    s.name,
-    CAST(t.target_data AS XML)
-FROM sys.server_event_sessions s
-INNER JOIN sys.server_event_session_targets t
     ON s.event_session_id = t.event_session_id
 WHERE t.target_name = 'event_file';
 
 
-ALTER EVENT SESSION [SessionName]
+ALTER EVENT SESSION [MySession]
 ON SERVER
 STATE = STOP;
 GO
 
-DROP EVENT SESSION [SessionName]
+DROP EVENT SESSION [MySession]
 ON SERVER;
 GO
 
-
-DBCC CHECKDB ('master') WITH NO_INFOMSGS, ALL_ERRORMSGS;
-GO
-
-DBCC CHECKDB ('msdb') WITH NO_INFOMSGS, ALL_ERRORMSGS;
-GO
-
-DBCC CHECKDB ('model') WITH NO_INFOMSGS, ALL_ERRORMSGS;
-GO
+SELECT name
+FROM sys.server_event_sessions
+ORDER BY name;
