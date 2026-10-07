@@ -1,15 +1,8 @@
-Subject: Assistance Required for SQL Client Patch Reapplication – Invesco/GXDemo
-
-Hi Team,
-
-We are planning to re-apply Patch-06 on the SQL Clients for Invesco/GXDemo tomorrow.
-
-Before the previous upgrade, Entra ID authentication was enabled, which subsequently caused issues with Always On Availability Group synchronization on the secondary replica. To avoid similar issues during the upcoming activity, we would like to disable Entra ID before the upgrade and re-enable it after the upgrade is completed.
-
-This is related to the currently broken AG configuration in Azure MI, and we want to ensure the patching activity proceeds smoothly.
-
-Additionally, could you please confirm if there have been any recent changes made in the Azure HR region that we should be aware of?
-
-We will require your assistance to disable and re-enable Entra ID for approximately 60-70 minutes during the maintenance window.
-
-Please let us know your availability and any considerations before we proceed.
+Patch-06 is a minor PFI 2026 patch related to the ZAP utility compatibility with SPN connectivity.
+ 
+PFI 2026 supports SPN capability by default. However, the ZAP utility required an additional compatibility fix to work correctly with SPN connectivity. This fix was released as part of Patch-06.
+ 
+We have applied Patch-06 in the BUAT Azure environment and validated the ZAP utility across all three clients. All three are working as expected with SPN connectivity and no issues has been reported so far.
+ 
+Patch-06 contains minor fixes and does not introduce any functional changes that would put us out of sync with NTT Production. The purpose of applying it is specifically to address the ZAP/SPN compatibility issue.
+ 
