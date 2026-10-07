@@ -1,8 +1,46 @@
-Patch-06 is a minor PFI 2026 patch related to the ZAP utility compatibility with SPN connectivity.
- 
-PFI 2026 supports SPN capability by default. However, the ZAP utility required an additional compatibility fix to work correctly with SPN connectivity. This fix was released as part of Patch-06.
- 
-We have applied Patch-06 in the BUAT Azure environment and validated the ZAP utility across all three clients. All three are working as expected with SPN connectivity and no issues has been reported so far.
- 
-Patch-06 contains minor fixes and does not introduce any functional changes that would put us out of sync with NTT Production. The purpose of applying it is specifically to address the ZAP/SPN compatibility issue.
- 
+Secondary PFI 2026 Re-setup Plan
+
+Install PFI 2026
+
+Complete fresh installation of PFI 2026 on the Secondary server.
+
+Apply Required Patches
+
+Apply Patch-01.
+Apply Patch-06 for the required fixes, including ZAP/SPN compatibility.
+
+Configure INI Files
+
+Configure/update all required PFI INI configuration files.
+Validate configuration against the Primary environment.
+
+Update Service Account
+
+Configure the required service account for all applicable PFI services.
+Validate that services start successfully.
+
+Restart Secondary Server
+
+Restart the server after installation, patching, and configuration.
+Verify all required PFI services are running successfully.
+
+Failover to Secondary
+
+Perform Azure failover from Primary to Secondary.
+Confirm Secondary is active and accessible.
+
+Validate Applications on Secondary
+
+Test PFI functionality.
+Test ZAP/SPN connectivity.
+Validate other dependent applications/interfaces.
+Confirm all three clients are functioning as expected.
+
+Fail Back to Primary
+
+After successful validation, perform failback from Secondary to Primary.
+
+Final Validation
+
+Retest PFI and all dependent applications after failback.
+Confirm Primary is operating normally and no issues were introduced.
