@@ -1,1 +1,26 @@
-SELECT     database_id,     name AS database_name,     seeding_mode_desc,     seeding_state_desc,     seeding_progress,     seeding_start_time,     seeding_end_time,     failure_state_desc,     failure_state_desc AS failure_reasonFROM sys.dm_hadr_automatic_seedingWHERE seeding_state_desc <> 'COMPLETED';
+Task Name
+Add Server to GMSA AD Group
+Reboot VM
+Apply GMSA Account to SQL Services
+Setup HADR
+Onboarding Server to CyberArk
+CAPAM
+Onboarding Server to APMD
+SSL Certificate
+CMDB
+Autosys Job Tool
+
+
+Sub Name / Activity
+Add server to GMSA AD Group
+Reboot VM to effect GMSA changes
+Apply GMSA account to SQL services using command
+PROD/BUAT: Setup HADR configuration
+Onboard server to CyberArk
+CAPAM onboarding / configuration
+Onboard server to APMD
+SSL certificate configuration
+CMDB update / onboarding
+Autosys Job Tool onboarding / configuration
+
+Manual / Automation	Process / SOP	Steps	Owner	Status	Notes
