@@ -1,26 +1,21 @@
-Task Name
-Add Server to GMSA AD Group
-Reboot VM
-Apply GMSA Account to SQL Services
-Setup HADR
-Onboarding Server to CyberArk
-CAPAM
-Onboarding Server to APMD
-SSL Certificate
-CMDB
-Autosys Job Tool
+**Incident Description: Cluster Creation Failure During HADR Setup**
 
+While configuring Windows Failover Clustering as part of the HADR setup for the MAT environment, cluster creation failed across multiple server sets.
 
-Sub Name / Activity
-Add server to GMSA AD Group
-Reboot VM to effect GMSA changes
-Apply GMSA account to SQL services using command
-PROD/BUAT: Setup HADR configuration
-Onboard server to CyberArk
-CAPAM onboarding / configuration
-Onboard server to APMD
-SSL certificate configuration
-CMDB update / onboarding
-Autosys Job Tool onboarding / configuration
+**Issue Summary:**
+- The cluster creation process did not complete successfully.
+- No actionable error messages were displayed during the failure.
+- Cluster logs and available system logs were reviewed; however, no specific errors or diagnostic information were found that could help identify the root cause.
+- Due to the absence of meaningful error messages and logs, further troubleshooting has been blocked.
 
-Manual / Automation	Process / SOP	Steps	Owner	Status	Notes
+**Environment Status:**
+- **MAT Server Set 1:** Cluster setup failed because the DR server/node was not reachable.
+- **MAT Server Set 2:** Cluster creation failed with an unknown error. No relevant errors were found in cluster logs, event logs, or installation output.
+- **MAT Server Set 3:** Cluster setup is currently in progress.
+
+**Additional Information:**
+- HADR configuration activity is being performed jointly with the SSB DBA team.
+- We also require Active Directory permissions to create cluster computer objects. As this access is managed by another team, we are dependent on their assistance for completing the cluster build process.
+
+**Request:**
+Assistance is required to investigate the cluster creation failure, identify the root cause, and provide the necessary support for cluster object creation and cluster validation.
