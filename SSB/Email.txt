@@ -1,24 +1,22 @@
-Short Description:
- WSFC Setup Failure on New Build Wave-01 Migration Servers – Immediate Windows Engineer Assistance Required
+Subject: Urgent Assistance Required – WSFC Setup Failure on Wave-01 Migration Servers
 
-Description:
- During the setup of Windows Server Failover Clustering (WSFC) on the New Build Wave-01 migration servers, we encountered failures that are blocking progress of the migration activities. We require urgent assistance from the Windows Engineering team to investigate and resolve the issue.
+Hi Team,
 
-This migration is on a critical delivery timeline, and the current blocker is impacting our schedule. Please engage a Windows Engineer immediately to review the cluster configuration, identify the root cause, and support remediation efforts.
+We are encountering issues while setting up the Windows Server Failover Cluster (WSFC) on the new Build Wave-01 migration servers. The WSFC configuration is failing, and we require immediate assistance from a Windows Engineer to investigate and resolve the issue.
 
-Business Impact:
-
-Critical migration activity is blocked.
-Risk to committed delivery timelines.
-Immediate support required to avoid further delays.
+This migration is on a critical delivery timeline, and the current blocker is impacting our progress. We would appreciate your urgent engagement to help expedite troubleshooting and resolution.
 
 Server Details:
- Please add the server names/IPs/details below.
 
 Server 1:
 Server 2:
-Cluster Name (if applicable):
+Cluster Name:
 Error Details:
 
-Priority: High / Critical
- Action Required: Immediate engagement from the Windows Engineering team for troubleshooting and resolution.
+Please prioritize this request and assign a Windows Engineer at the earliest possible opportunity.
+
+Thank you for your support.
+
+Regards,
+ Phanikumar Bellamkonda
+ Expert Database Administrator
