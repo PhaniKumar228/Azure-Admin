@@ -1,21 +1,24 @@
-**Incident Description: Cluster Creation Failure During HADR Setup**
+Short Description:
+ WSFC Setup Failure on New Build Wave-01 Migration Servers – Immediate Windows Engineer Assistance Required
 
-While configuring Windows Failover Clustering as part of the HADR setup for the MAT environment, cluster creation failed across multiple server sets.
+Description:
+ During the setup of Windows Server Failover Clustering (WSFC) on the New Build Wave-01 migration servers, we encountered failures that are blocking progress of the migration activities. We require urgent assistance from the Windows Engineering team to investigate and resolve the issue.
 
-**Issue Summary:**
-- The cluster creation process did not complete successfully.
-- No actionable error messages were displayed during the failure.
-- Cluster logs and available system logs were reviewed; however, no specific errors or diagnostic information were found that could help identify the root cause.
-- Due to the absence of meaningful error messages and logs, further troubleshooting has been blocked.
+This migration is on a critical delivery timeline, and the current blocker is impacting our schedule. Please engage a Windows Engineer immediately to review the cluster configuration, identify the root cause, and support remediation efforts.
 
-**Environment Status:**
-- **MAT Server Set 1:** Cluster setup failed because the DR server/node was not reachable.
-- **MAT Server Set 2:** Cluster creation failed with an unknown error. No relevant errors were found in cluster logs, event logs, or installation output.
-- **MAT Server Set 3:** Cluster setup is currently in progress.
+Business Impact:
 
-**Additional Information:**
-- HADR configuration activity is being performed jointly with the SSB DBA team.
-- We also require Active Directory permissions to create cluster computer objects. As this access is managed by another team, we are dependent on their assistance for completing the cluster build process.
+Critical migration activity is blocked.
+Risk to committed delivery timelines.
+Immediate support required to avoid further delays.
 
-**Request:**
-Assistance is required to investigate the cluster creation failure, identify the root cause, and provide the necessary support for cluster object creation and cluster validation.
+Server Details:
+ Please add the server names/IPs/details below.
+
+Server 1:
+Server 2:
+Cluster Name (if applicable):
+Error Details:
+
+Priority: High / Critical
+ Action Required: Immediate engagement from the Windows Engineering team for troubleshooting and resolution.
