@@ -1,112 +1,12 @@
-Import-Module FailoverClusters
+Thank you for your assistance yesterday.
 
-$Cluster = Get-Cluster
+However, we are still facing issues with the cluster setup and would appreciate your help in resolving them. We currently have three cluster sets, and all three are experiencing issues:
 
-Write-Host "========================================="
-Write-Host "CLUSTER PROPERTIES"
-Write-Host "========================================="
+M01 & M02: The HA server network is intermittently going down, causing the HA node/network to become unavailable.
+M03: We need your assistance to set up the cluster again as the current configuration is not working as expected.
 
-$ClusterInfo = [PSCustomObject]@{
-    ClusterName     = $Cluster.Name
-    FunctionalLevel = $Cluster.ClusterFunctionalLevel
-    QuorumType      = (Get-ClusterQuorum).QuorumType
-    WitnessType     = (Get-ClusterQuorum).WitnessType
-}
+Unfortunately, we do not have the required access to perform further testing and troubleshooting on our end. Lakshna is currently helping us with access and coordination.
 
-$ClusterInfo | Format-List
+Given the critical project timelines, we would appreciate your prompt support in resolving these issues.
 
-Write-Host "`n========================================="
-Write-Host "CLUSTER IP DETAILS"
-Write-Host "========================================="
-
-Get-ClusterResource |
-Where-Object { $_.ResourceType -eq "IP Address" } |
-ForEach-Object {
-    $IP = $_ | Get-ClusterParameter |
-          Where-Object { $_.Name -eq "Address" }
-
-    [PSCustomObject]@{
-        ClusterResource = $_.Name
-        IPAddress       = $IP.Value
-        State           = $_.State
-        OwnerGroup      = $_.OwnerGroup
-    }
-} | Format-Table -AutoSize
-
-
-Write-Host "`n========================================="
-Write-Host "CLUSTER NODES"
-Write-Host "========================================="
-
-$NodeResults = foreach ($Node in Get-ClusterNode)
-{
-    $IPs = (Get-CimInstance Win32_NetworkAdapterConfiguration `
-            -ComputerName $Node.Name |
-            Where-Object {$_.IPAddress} |
-            Select-Object -ExpandProperty IPAddress) -join ", "
-
-    [PSCustomObject]@{
-        ClusterName = $Cluster.Name
-        NodeName    = $Node.Name
-        NodeState   = $Node.State
-        NodeWeight  = $Node.NodeWeight
-        IPAddresses = $IPs
-    }
-}
-
-$NodeResults | Format-Table -AutoSize
-
-
-Write-Host "`n========================================="
-Write-Host "CLUSTER NETWORKS"
-Write-Host "========================================="
-
-Get-ClusterNetwork | Select-Object `
-    @{N='ClusterName';E={$Cluster.Name}},
-    Name,
-    Address,
-    AddressMask,
-    Role,
-    State |
-Format-Table -AutoSize
-
-
-Write-Host "`n========================================="
-Write-Host "CLUSTER GROUPS"
-Write-Host "========================================="
-
-Get-ClusterGroup | Select-Object `
-    Name,
-    State,
-    OwnerNode |
-Format-Table -AutoSize
-
-
-Write-Host "`n========================================="
-Write-Host "AG LISTENERS"
-Write-Host "========================================="
-
-$Listeners = Get-ClusterResource |
-Where-Object {$_.ResourceType -eq 'Network Name'}
-
-foreach ($Listener in $Listeners)
-{
-    $IPs = Get-ClusterResource |
-           Where-Object {
-                $_.OwnerGroup -eq $Listener.OwnerGroup -and
-                $_.ResourceType -eq 'IP Address'
-           }
-
-    foreach ($IP in $IPs)
-    {
-        $Addr = ($IP | Get-ClusterParameter |
-                Where-Object {$_.Name -eq "Address"}).Value
-
-        [PSCustomObject]@{
-            ListenerName = $Listener.Name
-            ListenerIP   = $Addr
-            State        = $Listener.State
-            AGGroup      = $Listener.OwnerGroup
-        }
-    }
-} | Format-Table -AutoSize
+Thank you for your help.
