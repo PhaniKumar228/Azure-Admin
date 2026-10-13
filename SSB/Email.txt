@@ -1,22 +1,112 @@
-Subject: Urgent Assistance Required – WSFC Setup Failure on Wave-01 Migration Servers
+Import-Module FailoverClusters
 
-Hi Team,
+$Cluster = Get-Cluster
 
-We are encountering issues while setting up the Windows Server Failover Cluster (WSFC) on the new Build Wave-01 migration servers. The WSFC configuration is failing, and we require immediate assistance from a Windows Engineer to investigate and resolve the issue.
+Write-Host "========================================="
+Write-Host "CLUSTER PROPERTIES"
+Write-Host "========================================="
 
-This migration is on a critical delivery timeline, and the current blocker is impacting our progress. We would appreciate your urgent engagement to help expedite troubleshooting and resolution.
+$ClusterInfo = [PSCustomObject]@{
+    ClusterName     = $Cluster.Name
+    FunctionalLevel = $Cluster.ClusterFunctionalLevel
+    QuorumType      = (Get-ClusterQuorum).QuorumType
+    WitnessType     = (Get-ClusterQuorum).WitnessType
+}
 
-Server Details:
+$ClusterInfo | Format-List
 
-Server 1:
-Server 2:
-Cluster Name:
-Error Details:
+Write-Host "`n========================================="
+Write-Host "CLUSTER IP DETAILS"
+Write-Host "========================================="
 
-Please prioritize this request and assign a Windows Engineer at the earliest possible opportunity.
+Get-ClusterResource |
+Where-Object { $_.ResourceType -eq "IP Address" } |
+ForEach-Object {
+    $IP = $_ | Get-ClusterParameter |
+          Where-Object { $_.Name -eq "Address" }
 
-Thank you for your support.
+    [PSCustomObject]@{
+        ClusterResource = $_.Name
+        IPAddress       = $IP.Value
+        State           = $_.State
+        OwnerGroup      = $_.OwnerGroup
+    }
+} | Format-Table -AutoSize
 
-Regards,
- Phanikumar Bellamkonda
- Expert Database Administrator
+
+Write-Host "`n========================================="
+Write-Host "CLUSTER NODES"
+Write-Host "========================================="
+
+$NodeResults = foreach ($Node in Get-ClusterNode)
+{
+    $IPs = (Get-CimInstance Win32_NetworkAdapterConfiguration `
+            -ComputerName $Node.Name |
+            Where-Object {$_.IPAddress} |
+            Select-Object -ExpandProperty IPAddress) -join ", "
+
+    [PSCustomObject]@{
+        ClusterName = $Cluster.Name
+        NodeName    = $Node.Name
+        NodeState   = $Node.State
+        NodeWeight  = $Node.NodeWeight
+        IPAddresses = $IPs
+    }
+}
+
+$NodeResults | Format-Table -AutoSize
+
+
+Write-Host "`n========================================="
+Write-Host "CLUSTER NETWORKS"
+Write-Host "========================================="
+
+Get-ClusterNetwork | Select-Object `
+    @{N='ClusterName';E={$Cluster.Name}},
+    Name,
+    Address,
+    AddressMask,
+    Role,
+    State |
+Format-Table -AutoSize
+
+
+Write-Host "`n========================================="
+Write-Host "CLUSTER GROUPS"
+Write-Host "========================================="
+
+Get-ClusterGroup | Select-Object `
+    Name,
+    State,
+    OwnerNode |
+Format-Table -AutoSize
+
+
+Write-Host "`n========================================="
+Write-Host "AG LISTENERS"
+Write-Host "========================================="
+
+$Listeners = Get-ClusterResource |
+Where-Object {$_.ResourceType -eq 'Network Name'}
+
+foreach ($Listener in $Listeners)
+{
+    $IPs = Get-ClusterResource |
+           Where-Object {
+                $_.OwnerGroup -eq $Listener.OwnerGroup -and
+                $_.ResourceType -eq 'IP Address'
+           }
+
+    foreach ($IP in $IPs)
+    {
+        $Addr = ($IP | Get-ClusterParameter |
+                Where-Object {$_.Name -eq "Address"}).Value
+
+        [PSCustomObject]@{
+            ListenerName = $Listener.Name
+            ListenerIP   = $Addr
+            State        = $Listener.State
+            AGGroup      = $Listener.OwnerGroup
+        }
+    }
+} | Format-Table -AutoSize
