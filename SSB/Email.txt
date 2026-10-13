@@ -1,12 +1,9 @@
-Thank you for your assistance yesterday.
+Subject: CAPAM Team - Request for Immediate Assignment and Action
 
-However, we are still facing issues with the cluster setup and would appreciate your help in resolving them. We currently have three cluster sets, and all three are experiencing issues:
+Hi CAPAM Team,
 
-M01 & M02: The HA server network is intermittently going down, causing the HA node/network to become unavailable.
-M03: We need your assistance to set up the cluster again as the current configuration is not working as expected.
+We still see that this ticket/request remains unassigned.
 
-Unfortunately, we do not have the required access to perform further testing and troubleshooting on our end. Lakshna is currently helping us with access and coordination.
+Could someone please pick this up and start working on it as soon as possible? This issue requires urgent attention, and we would appreciate your prompt support in driving it to resolution.
 
-Given the critical project timelines, we would appreciate your prompt support in resolving these issues.
-
-Thank you for your help.
+Thank you for your assistance.
