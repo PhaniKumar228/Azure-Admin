@@ -1,9 +1,9 @@
-Subject: CAPAM Team - Request for Immediate Assignment and Action
+Subject: Assistance Required to Re-Synchronize CA PAM Server
 
-Hi CAPAM Team,
+Hi Team,
 
-We still see that this ticket/request remains unassigned.
+We have completed the APMD process successfully. However, the server is still not synchronized with CA PAM.
 
-Could someone please pick this up and start working on it as soon as possible? This issue requires urgent attention, and we would appreciate your prompt support in driving it to resolution.
+We need your assistance in re-synchronizing it through the portal. Could someone please investigate and help resolve this issue at the earliest?
 
-Thank you for your assistance.
+Your support would be greatly appreciated.
