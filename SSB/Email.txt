@@ -1,3 +1,5 @@
-I was off yesterday. I've been following up on this since Monday and will escalate it to the next level today. I'm also not sure if we have access to open an MI case, but I'll verify that and update accordingly.
+The issue was related to the pamdatabase.ini file. We resolved it by updating the configuration from the 2025 version to the 2026 version. Following this change, we are now able to successfully connect to the 2026 environment for all SQL clients.
 
-Suresh / Jameel - FYI: We are hitting issues at critical stages of the process, and we need this to be expedited. I had already highlighted this concern during the application call with Laxmi. Your support in accelerating this would be greatly appreciated.
+Additionally, I would like to confirm that all PAM versions are currently running on the 2026 PFI with the latest patch applied.
+
+Could you please validate from your end and confirm that everything is working as expected?
