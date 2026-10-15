@@ -1,9 +1,3 @@
-Subject: Assistance Required to Re-Synchronize CA PAM Server
+I was off yesterday. I've been following up on this since Monday and will escalate it to the next level today. I'm also not sure if we have access to open an MI case, but I'll verify that and update accordingly.
 
-Hi Team,
-
-We have completed the APMD process successfully. However, the server is still not synchronized with CA PAM.
-
-We need your assistance in re-synchronizing it through the portal. Could someone please investigate and help resolve this issue at the earliest?
-
-Your support would be greatly appreciated.
+Suresh / Jameel - FYI: We are hitting issues at critical stages of the process, and we need this to be expedited. I had already highlighted this concern during the application call with Laxmi. Your support in accelerating this would be greatly appreciated.
