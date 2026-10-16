@@ -1,1 +1,13 @@
-Pre-stage the Cluster Name Object (CNO) or grant the CNO Create/Delete Computer Object permissions in the target OU along with DNS update permissions to enable AG Listener creation.
+Subject: BUAT - AppSupport Access Review Completed
+
+We performed a cleanup of all unused accounts in the BUAT environment. During the review, we identified a few inactive accounts and reactivated them as required.
+
+As of now, all 18 accounts listed below have AppSupport access.
+
+Please review and let us know if any additional changes are required.
+
+Thanks, Phanikumar
+
+Alternative (Short Version):
+
+BUAT: We completed the cleanup of unused accounts and reactivated the accounts that were found to be inactive. All 18 accounts listed below now have AppSupport access. Please review and confirm.
