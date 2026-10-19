@@ -1,3 +1,1 @@
-I can see that the PAM-related services are up and running on server 1054. Based on the configuration file, this server appears to be configured for PRIAC, which is an Oracle environment rather than a SQL Server environment.
-
-Could you please confirm whether you would like us to engage the Oracle team to assist with further investigation of this issue?
+This is an application-level text/configuration issue. We are working with Sharath to update the required text values in the configuration/INI files. Please proceed with further testing while we complete the configuration updates. We are currently updating the config files with the correct values and will keep you informed of the progress.
