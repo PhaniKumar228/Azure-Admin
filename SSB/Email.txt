@@ -1,13 +1,3 @@
-Subject: BUAT - AppSupport Access Review Completed
+I can see that the PAM-related services are up and running on server 1054. Based on the configuration file, this server appears to be configured for PRIAC, which is an Oracle environment rather than a SQL Server environment.
 
-We performed a cleanup of all unused accounts in the BUAT environment. During the review, we identified a few inactive accounts and reactivated them as required.
-
-As of now, all 18 accounts listed below have AppSupport access.
-
-Please review and let us know if any additional changes are required.
-
-Thanks, Phanikumar
-
-Alternative (Short Version):
-
-BUAT: We completed the cleanup of unused accounts and reactivated the accounts that were found to be inactive. All 18 accounts listed below now have AppSupport access. Please review and confirm.
+Could you please confirm whether you would like us to engage the Oracle team to assist with further investigation of this issue?
