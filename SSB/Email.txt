@@ -1,1 +1,18 @@
-This is an application-level text/configuration issue. We are working with Sharath to update the required text values in the configuration/INI files. Please proceed with further testing while we complete the configuration updates. We are currently updating the config files with the correct values and will keep you informed of the progress.
+Subject: Assistance Required: SPN Authentication Issues for Two Service Principals
+
+Hi Team,
+
+We are seeking assistance to troubleshoot and resolve SPN configuration/authentication issues for the two Service Principals listed below.
+
+We have already worked with the CAPM team and tested using the latest password/secret, but the authentication issue persists. All other 7 SPNs are functioning correctly, and only the two SPNs below are affected.
+
+Affected SPNs:
+
+<SPN-1>
+<SPN-2>
+
+Could someone please investigate this on a priority basis and advise on any issues with the SPN configuration, secret, permissions, or Microsoft Entra ID setup?
+
+For reference, I have already raised an RITM for tracking and support.
+
+Your prompt assistance is greatly appreciated as this is currently impacting connectivity/authentication testing.
