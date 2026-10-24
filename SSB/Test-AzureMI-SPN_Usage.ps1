@@ -12,3 +12,18 @@ Database Name
 Service Principal (Client ID)
 Service Principal Secret
 Tenant ID
+
+
+
+# Test a specific MI with a specific SPN
+.\Test-AzureMI-SPN.ps1 `
+    -HostFqdn "ssc-gts-pfi-sub-prd-01-use2-sql-mi-1001.f5bb953edf71.database.windows.net" `
+    -SPNName "azspn-pfi-reportlogin-linnational-prod-01" `
+    -DatabaseName "MyDatabase"
+
+# With a custom config path
+.\Test-AzureMI-SPN.ps1 `
+    -HostFqdn "ssc-gts-pfi-sub-prd-02-cne-sql-mi-1001.a3cd812fbe92.database.windows.net" `
+    -SPNName "azspn-pfi-reportlogin-linnational-prod-02" `
+    -DatabaseName "MyDatabase" `
+    -ConfigFilePath "C:\configs\mi-config.json"
