@@ -1,0 +1,70 @@
+{
+  "TenantId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "Servers": [
+    {
+      "Name": "ssc-gts-pfi-sub-prd-01-use2-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-01-use2-sql-mi-1001.f5bb953edf71.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-01",
+      "Role": "Primary",
+      "Set": 1,
+      "Port": 1433
+    },
+    {
+      "Name": "ssc-gts-pfi-sub-prd-01-cne-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-01-cne-sql-mi-1001.f5bb953edf71.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-01",
+      "Role": "Secondary",
+      "Set": 1,
+      "Port": 1433
+    },
+    {
+      "Name": "ssc-gts-pfi-sub-prd-02-use2-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-02-use2-sql-mi-1001.a3cd812fbe92.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-02",
+      "Role": "Primary",
+      "Set": 2,
+      "Port": 1433
+    },
+    {
+      "Name": "ssc-gts-pfi-sub-prd-02-cne-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-02-cne-sql-mi-1001.a3cd812fbe92.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-02",
+      "Role": "Secondary",
+      "Set": 2,
+      "Port": 1433
+    },
+    {
+      "Name": "ssc-gts-pfi-sub-prd-03-use2-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-03-use2-sql-mi-1001.c7ef340dca15.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-03",
+      "Role": "Primary",
+      "Set": 3,
+      "Port": 1433
+    },
+    {
+      "Name": "ssc-gts-pfi-sub-prd-03-cne-sql-mi-1001",
+      "HostFqdn": "ssc-gts-pfi-sub-prd-03-cne-sql-mi-1001.c7ef340dca15.database.windows.net",
+      "CredentialName": "azspn-pfi-reportlogin-linnational-prod-03",
+      "Role": "Secondary",
+      "Set": 3,
+      "Port": 1433
+    }
+  ],
+  "Credentials": [
+    {
+      "Name": "azspn-pfi-reportlogin-linnational-prod-01",
+      "ClientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "ClientSecret": "your-secret-here"
+    },
+    {
+      "Name": "azspn-pfi-reportlogin-linnational-prod-02",
+      "ClientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "ClientSecret": "your-secret-here"
+    },
+    {
+      "Name": "azspn-pfi-reportlogin-linnational-prod-03",
+      "ClientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "ClientSecret": "your-secret-here"
+    }
+  ]
+}
