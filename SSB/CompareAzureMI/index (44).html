@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Script Execution Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #1a237e, #283593);
+      color: #fff;
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: 0.5px; }
+    .header .meta { font-size: 0.82rem; opacity: 0.85; margin-top: 6px; line-height: 1.7; }
+    .badge {
+      background: #43a047;
+      color: #fff;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .badge.fail { background: #e53935; }
+
+    /* ── Container ── */
+    .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
+
+    /* ── Summary Cards ── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      border-top: 4px solid #ccc;
+    }
+    .card.total   { border-color: #1a237e; }
+    .card.passed  { border-color: #43a047; }
+    .card.failed  { border-color: #e53935; }
+    .card.skipped { border-color: #fb8c00; }
+    .card.duration{ border-color: #00838f; }
+    .card .num { font-size: 2rem; font-weight: 700; }
+    .card .lbl { font-size: 0.78rem; color: #777; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card.total   .num { color: #1a237e; }
+    .card.passed  .num { color: #43a047; }
+    .card.failed  .num { color: #e53935; }
+    .card.skipped .num { color: #fb8c00; }
+    .card.duration .num { color: #00838f; font-size: 1.4rem; }
+
+    /* ── Progress Bar ── */
+    .progress-wrap {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .progress-wrap h3 { margin-bottom: 12px; font-size: 0.95rem; color: #555; }
+    .progress-bar {
+      display: flex;
+      height: 22px;
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .prog-passed  { background: #43a047; }
+    .prog-failed  { background: #e53935; }
+    .prog-skipped { background: #fb8c00; }
+    .legend { display: flex; gap: 20px; margin-top: 10px; font-size: 0.8rem; }
+    .legend span { display: flex; align-items: center; gap: 6px; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+    /* ── Section Title ── */
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a237e;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e3e6f0;
+    }
+
+    /* ── Environment Info ── */
+    .env-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .env-item label { font-size: 0.74rem; color: #888; text-transform: uppercase; letter-spacing: 0.4px; }
+    .env-item p { font-size: 0.9rem; color: #333; font-weight: 500; margin-top: 3px; }
+
+    /* ── Table ── */
+    .table-wrap {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; }
+    thead th {
+      background: #1a237e;
+      color: #fff;
+      padding: 11px 14px;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    tbody tr:nth-child(even) { background: #f7f8fc; }
+    tbody tr:hover { background: #eef0fb; }
+    tbody td { padding: 10px 14px; border-bottom: 1px solid #eee; vertical-align: top; }
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+    .st-pass    { background: #e8f5e9; color: #2e7d32; }
+    .st-fail    { background: #ffebee; color: #c62828; }
+    .st-skip    { background: #fff3e0; color: #e65100; }
+    .st-warn    { background: #fffde7; color: #f57f17; }
+    .err-msg { color: #c62828; font-size: 0.78rem; margin-top: 4px; font-style: italic; }
+
+    /* ── Log Panel ── */
+    .log-panel {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 30px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      max-height: 340px;
+      overflow-y: auto;
+    }
+    .log-panel .log-title {
+      color: #89dceb;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .log-info  { color: #a6e3a1; }
+    .log-warn  { color: #f9e2af; }
+    .log-error { color: #f38ba8; }
+    .log-debug { color: #89b4fa; }
+    .log-ts    { color: #6c7086; margin-right: 10px; }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.78rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <div>
+    <h1>📋 Script Execution Report</h1>
+    <div class="meta">
+      Run ID: &nbsp;<strong>RUN-20261024-00472</strong> &nbsp;|&nbsp;
+      Script: &nbsp;<strong>data_pipeline_validator.py</strong> &nbsp;|&nbsp;
+      Triggered by: &nbsp;<strong>cicd-bot@ensono.com</strong><br/>
+      Start: &nbsp;2026-10-24 &nbsp;08:45:12 UTC &nbsp;|&nbsp;
+      End: &nbsp;2026-10-24 &nbsp;08:47:39 UTC
+    </div>
+  </div>
+  <div class="badge">✔ COMPLETED</div>
+</div>
+
+<div class="container">
+
+  <!-- ══ SUMMARY CARDS ══ -->
+  <div class="summary-grid">
+    <div class="card total">
+      <div class="num">24</div>
+      <div class="lbl">Total Steps</div>
+    </div>
+    <div class="card passed">
+      <div class="num">20</div>
+      <div class="lbl">Passed</div>
+    </div>
+    <div class="card failed">
+      <div class="num">2</div>
+      <div class="lbl">Failed</div>
+    </div>
+    <div class="card skipped">
+      <div class="num">2</div>
+      <div class="lbl">Skipped</div>
+    </div>
+    <div class="card duration">
+      <div class="num">2m 27s</div>
+      <div class="lbl">Duration</div>
+    </div>
+  </div>
+
+  <!-- ══ PROGRESS BAR ══ -->
+  <div class="progress-wrap">
+    <h3>Overall Pass Rate — <strong>83.3%</strong></h3>
+    <div class="progress-bar">
+      <div class="prog-passed"  style="width:83.3%"></div>
+      <div class="prog-failed"  style="width:8.3%"></div>
+      <div class="prog-skipped" style="width:8.3%"></div>
+    </div>
+    <div class="legend">
+      <span><span class="dot" style="background:#43a047"></span> Passed (20)</span>
+      <span><span class="dot" style="background:#e53935"></span> Failed (2)</span>
+      <span><span class="dot" style="background:#fb8c00"></span> Skipped (2)</span>
+    </div>
+  </div>
+
+  <!-- ══ ENVIRONMENT INFO ══ -->
+  <div class="table-wrap" style="padding-bottom:24px;">
+    <div class="section-title">🖥️ Environment Details</div>
+    <div class="env-grid" style="box-shadow:none;padding:0;margin:0;">
+      <div class="env-item"><label>Host</label><p>prod-runner-node-07</p></div>
+      <div class="env-item"><label>OS</label><p>Ubuntu 22.04.3 LTS</p></div>
+      <div class="env-item"><label>Python Version</label><p>3.11.6</p></div>
+      <div class="env-item"><label>Script Version</label><p>v2.4.1</p></div>
+      <div class="env-item"><label>Environment</label><p>Production</p></div>
+      <div class="env-item"><label>Pipeline</label><p>ETL-Daily-Sync</p></div>
+      <div class="env-item"><label>Branch</label><p>main @ a3f91bc</p></div>
+      <div class="env-item"><label>Executor</label><p>GitHub Actions / ubuntu-latest</p></div>
+    </div>
+  </div>
+
+  <!-- ══ STEP RESULTS TABLE ══ -->
+  <div class="table-wrap">
+    <div class="section-title">🔍 Step-by-Step Results</div>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Step Name</th>
+          <th>Module</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>Rows Processed</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01</td>
+          <td>Initialize Config</td>
+          <td>core.config</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>0.4s</td>
+          <td>—</td>
+          <td>Config loaded from /etc/pipeline/config.yaml</td>
+        </tr>
+        <tr>
+          <td>02</td>
+          <td>Validate DB Connection</td>
+          <td>db.connector</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>1.2s</td>
+          <td>—</td>
+          <td>Connected to prod-db-01 (PostgreSQL 15.2)</td>
+        </tr>
+        <tr>
+          <td>03</td>
+          <td>Extract Source Data</td>
+          <td>etl.extractor</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>14.7s</td>
+          <td>142,580</td>
+          <td>Source: S3 bucket ensono-data-lake/raw/2026-10-24</td>
+        </tr>
+        <tr>
+          <td>04</td>
+          <td>Schema Validation</td>
+          <td>etl.validator</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>3.1s</td>
+          <td>142,580</td>
+          <td>All 18 expected columns present</td>
+        </tr>
+        <tr>
+          <td>05</td>
+          <td>Null Check – customer_id</td>
+          <td>etl.validator</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>0.9s</td>
+          <td>142,580</td>
+          <td>0 nulls detected</td>
+        </tr>
+        <tr>
+          <td>06</td>
+          <td>Null Check – transaction_date</td>
+          <td>etl.validator</td>
+          <td><span class="status-badge st-warn">WARN</span></td>
+          <td>0.9s</td>
+          <td>142,580</td>
+          <td>47 nulls found — defaulted to epoch</td>
+        </tr>
+        <tr>
+          <td>07</td>
+          <td>Data Type Casting</td>
+          <td>etl.transformer</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>5.3s</td>
+          <td>142,580</td>
+          <td>Decimal precision corrected on amount field</td>
+        </tr>
+        <tr>
+          <td>08</td>
+          <td>Duplicate Record Check</td>
+          <td>etl.validator</td>
+          <td><span class="status-badge st-fail">FAIL</span></td>
+          <td>2.8s</td>
+          <td>142,580</td>
+          <td>
+            312 duplicate records found (threshold: 0)
+            <div class="err-msg">AssertionError: duplicate_count (312) exceeds allowed max (0)</div>
+          </td>
+        </tr>
+        <tr>
+          <td>09</td>
+          <td>Deduplicate Records</td>
+          <td>etl.transformer</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>1.6s</td>
+          <td>142,268</td>
+          <td>312 duplicates removed</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>Currency Normalisation</td>
+          <td>etl.transformer</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>4.1s</td>
+          <td>142,268</td>
+          <td>Converted EUR/GBP/JPY → USD</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>Reference Table Join</td>
+          <td>etl.enricher</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>8.9s</td>
+          <td>142,268</td>
+          <td>Joined with dim_customer (1.2M rows)</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>Business Rule BR-001</td>
+          <td>rules.engine</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>1.0s</td>
+          <td>142,268</td>
+          <td>All transactions ≥ $0.01</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>Business Rule BR-002</td>
+          <td>rules.engine</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>1.1s</td>
+          <td>142,268</td>
+          <td>No future-dated transactions</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>Business Rule BR-007</td>
+          <td>rules.engine</td>
+          <td><span class="status-badge st-fail">FAIL</span></td>
+          <td>1.3s</td>
+          <td>142,268</td>
+          <td>
+            14 transactions exceed $1,000,000 single-day limit
+            <div class="err-msg">ValidationError: high_value_breach on account IDs [10042, 10817, 11290 ...]</div>
+          </td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>Aggregate Summary Build</td>
+          <td>etl.aggregator</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>6.4s</td>
+          <td>142,268</td>
+          <td>Daily summaries by region and category built</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>Load to Staging Table</td>
+          <td>db.loader</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>18.2s</td>
+          <td>142,268</td>
+          <td>Loaded to stg_transactions_20261024</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>Post-Load Row Count Check</td>
+          <td>db.loader</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>0.6s</td>
+          <td>142,268</td>
+          <td>Source ↔ target row count match confirmed</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>Checksum Verification</td>
+          <td>db.loader</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>1.8s</td>
+          <td>142,268</td>
+          <td>SHA-256 checksum matched</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>Archive Raw Files</td>
+          <td>storage.archiver</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>3.5s</td>
+          <td>—</td>
+          <td>Moved to S3 ensono-data-lake/archive/2026-10-24</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>Cleanup Temp Files</td>
+          <td>core.cleanup</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>0.7s</td>
+          <td>—</td>
+          <td>4 temp files removed from /tmp/pipeline/</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>Send Slack Notification</td>
+          <td>notify.slack</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>0.5s</td>
+          <td>—</td>
+          <td>Alert sent to #data-ops-alerts</td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>Generate Data Quality Report</td>
+          <td>reporting.dq</td>
+          <td><span class="status-badge st-pass">PASS</span></td>
+          <td>2.1s</td>
+          <td>—</td>
+          <td>DQ report saved to /reports/dq_20261024.html</td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>ML Feature Refresh</td>
+          <td>ml.feature_store</td>
+          <td><span class="status-badge st-skip">SKIP</span></td>
+          <td>0.0s</td>
+          <td>—</td>
+          <td>Skipped — ML pipeline disabled in config</td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>External API Sync</td>
+          <td>api.sync</td>
+          <td><span class="status-badge st-skip">SKIP</span></td>
+          <td>0.0s</td>
+          <td>—</td>
+          <td>Skipped — Maintenance window active</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ EXECUTION LOG ══ -->
+  <div class="log-panel">
+    <div class="log-title">📄 Execution Log</div>
+    <div><span class="log-ts">[08:45:12.001]</span><span class="log-info">[INFO]  </span> Script started — PID 18342</div>
+    <div><span class="log-ts">[08:45:12.210]</span><span class="log-info">[INFO]  </span> Config loaded: /etc/pipeline/config.yaml (env=production)</div>
+    <div><span class="log-ts">[08:45:13.442]</span><span class="log-info">[INFO]  </span> DB connection established: prod-db-01:5432 (PostgreSQL 15.2)</div>
+    <div><span class="log-ts">[08:45:14.800]</span><span class="log-info">[INFO]  </span> Extracting data from S3: ensono-data-lake/raw/2026-10-24/</div>
+    <div><span class="log-ts">[08:45:29.550]</span><span class="log-info">[INFO]  </span> Extraction complete — 142,580 rows loaded into memory</div>
+    <div><span class="log-ts">[08:45:32.680]</span><span class="log-info">[INFO]  </span> Schema validation passed — 18 columns confirmed</div>
+    <div><span class="log-ts">[08:45:33.590]</span><span class="log-warn">[WARN]  </span> 47 null values in 'transaction_date' — defaulting to 1970-01-01</div>
+    <div><span class="log-ts">[08:45:38.920]</span><span class="log-error">[ERROR] </span> Duplicate check FAILED — 312 duplicate records detected (allowed: 0)</div>
+    <div><span class="log-ts">[08:45:39.010]</span><span class="log-info">[INFO]  </span> Auto-deduplication triggered — removing 312 rows</div>
+    <div><span class="log-ts">[08:45:40.630]</span><span class="log-info">[INFO]  </span> Deduplication complete — 142,268 rows remaining</div>
+    <div><span class="log-ts">[08:45:44.770]</span><span class="log-info">[INFO]  </span> Currency normalisation complete (EUR/GBP/JPY → USD)</div>
+    <div><span class="log-ts">[08:45:53.700]</span><span class="log-info">[INFO]  </span> Reference join complete with dim_customer</div>
+    <div><span class="log-ts">[08:45:56.910]</span><span class="log-error">[ERROR] </span> BR-007 FAILED — 14 transactions breach $1,000,000 daily limit</div>
+    <div><span class="log-ts">[08:45:56.920]</span><span class="log-error">[ERROR] </span> Affected account IDs: [10042, 10817, 11290, 11455, 12008 ... +9 more]</div>
+    <div><span class="log-ts">[08:45:57.100]</span><span class="log-info">[INFO]  </span> Continuing pipeline in non-blocking mode per config flag</div>
+    <div><span class="log-ts">[08:46:03.500]</span><span class="log-info">[INFO]  </span> Daily aggregates built for 14 regions, 6 categories</div>
+    <div><span class="log-ts">[08:46:21.700]</span><span class="log-info">[INFO]  </span> 142,268 rows loaded to stg_transactions_20261024 in 18.2s</div>
+    <div><span class="log-ts">[08:46:22.310]</span><span class="log-info">[INFO]  </span> Post-load row count check passed ✔</div>
+    <div><span class="log-ts">[08:46:24.110]</span><span class="log-info">[INFO]  </span> SHA-256 checksum verified ✔</div>
+    <div><span class="log-ts">[08:46:27.640]</span><span class="log-info">[INFO]  </span> Raw files archived to S3: ensono-data-lake/archive/2026-10-24/</div>
+    <div><span class="log-ts">[08:46:28.340]</span><span class="log-info">[INFO]  </span> Temp cleanup: 4 files removed from /tmp/pipeline/</div>
+    <div><span class="log-ts">[08:46:28.850]</span><span class="log-info">[INFO]  </span> Slack notification sent to #data-ops-alerts</div>
+    <div><span class="log-ts">[08:46:30.970]</span><span class="log-info">[INFO]  </span> DQ report generated: /reports/dq_20261024.html</div>
+    <div><span class="log-ts">[08:46:30.980]</span><span class="log-debug">[DEBUG] </span> ML Feature Refresh skipped (ml_pipeline_enabled=false)</div>
+    <div><span class="log-ts">[08:46:30.985]</span><span class="log-debug">[DEBUG] </span> External API Sync skipped (maintenance_window=true)</div>
+    <div><span class="log-ts">[08:47:39.000]</span><span class="log-info">[INFO]  </span> Script completed — status: COMPLETED WITH WARNINGS | exit code: 0</div>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer">
+    Generated by EnsoPipeline Reporter v2.4.1 &nbsp;|&nbsp; Run ID: RUN-20261024-00472 &nbsp;|&nbsp; © 2026 Ensono
+  </div>
+
+</div>
+</body>
+</html>

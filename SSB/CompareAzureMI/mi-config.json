@@ -1,0 +1,79 @@
+{
+  "TenantId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "ManagedInstances": [
+    {
+      "ServerName": "mi-prod-eastus-01",
+      "FQDNSuffix": "xxxxxxxxxxxxxxxx.database.windows.net",
+      "Environment": "Production",
+      "Region": "East US",
+      "ServicePrincipalId": "aaaaaa01-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+      "ServicePrincipalName": "SPN-MI-PROD-EASTUS-01",
+      "ServicePrincipalSecret": "SPN_SECRET_PROD_01_REPLACE_ME"
+    },
+    {
+      "ServerName": "mi-prod-eastus-02",
+      "FQDNSuffix": "yyyyyyyyyyyyyyyy.database.windows.net",
+      "Environment": "Production",
+      "Region": "East US",
+      "ServicePrincipalId": "bbbbbb02-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+      "ServicePrincipalName": "SPN-MI-PROD-EASTUS-02",
+      "ServicePrincipalSecret": "SPN_SECRET_PROD_02_REPLACE_ME"
+    },
+    {
+      "ServerName": "mi-prod-westus-01",
+      "FQDNSuffix": "zzzzzzzzzzzzzzzz.database.windows.net",
+      "Environment": "Production",
+      "Region": "West US",
+      "ServicePrincipalId": "cccccc03-cccc-cccc-cccc-cccccccccccc",
+      "ServicePrincipalName": "SPN-MI-PROD-WESTUS-01",
+      "ServicePrincipalSecret": "SPN_SECRET_PROD_03_REPLACE_ME"
+    },
+    {
+      "ServerName": "mi-dr-eastus-01",
+      "FQDNSuffix": "wwwwwwwwwwwwwwww.database.windows.net",
+      "Environment": "DR",
+      "Region": "East US",
+      "ServicePrincipalId": "dddddd04-dddd-dddd-dddd-dddddddddddd",
+      "ServicePrincipalName": "SPN-MI-DR-EASTUS-01",
+      "ServicePrincipalSecret": "SPN_SECRET_DR_01_REPLACE_ME"
+    },
+    {
+      "ServerName": "mi-nonprod-eastus-01",
+      "FQDNSuffix": "vvvvvvvvvvvvvvvv.database.windows.net",
+      "Environment": "NonProd",
+      "Region": "East US",
+      "ServicePrincipalId": "eeeeee05-eeee-eeee-eeee-eeeeeeeeeeee",
+      "ServicePrincipalName": "SPN-MI-NONPROD-01",
+      "ServicePrincipalSecret": "SPN_SECRET_NONPROD_01_REPLACE_ME"
+    },
+    {
+      "ServerName": "mi-nonprod-westus-01",
+      "FQDNSuffix": "uuuuuuuuuuuuuuuu.database.windows.net",
+      "Environment": "NonProd",
+      "Region": "West US",
+      "ServicePrincipalId": "ffffff06-ffff-ffff-ffff-ffffffffffff",
+      "ServicePrincipalName": "SPN-MI-NONPROD-02",
+      "ServicePrincipalSecret": "SPN_SECRET_NONPROD_02_REPLACE_ME"
+    }
+  ],
+  "AdditionalSPNs": [
+    {
+      "ServicePrincipalId": "gggggg07-gggg-gggg-gggg-gggggggggggg",
+      "ServicePrincipalName": "SPN-MI-SHARED-READONLY",
+      "ServicePrincipalSecret": "SPN_SECRET_READONLY_REPLACE_ME",
+      "Description": "Shared read-only SPN for reporting/auditing"
+    },
+    {
+      "ServicePrincipalId": "hhhhhh08-hhhh-hhhh-hhhh-hhhhhhhhhhhh",
+      "ServicePrincipalName": "SPN-MI-SHARED-ADMIN",
+      "ServicePrincipalSecret": "SPN_SECRET_ADMIN_REPLACE_ME",
+      "Description": "Shared admin SPN for cross-MI operations"
+    },
+    {
+      "ServicePrincipalId": "iiiiii09-iiii-iiii-iiii-iiiiiiiiiiii",
+      "ServicePrincipalName": "SPN-MI-AUTOMATION",
+      "ServicePrincipalSecret": "SPN_SECRET_AUTO_REPLACE_ME",
+      "Description": "Automation/DevOps pipeline SPN"
+    }
+  ]
+}
