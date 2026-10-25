@@ -1,5 +1,5 @@
-Just want to clarify rather than make assumptions. We have several recently deployed Windows Server 2019 servers that require a SQL Server upgrade from SQL 2019 to SQL 2022.
+I have reviewed the server list and can see the below servers categorized under the SQL category.
 
-My understanding is that once the post-build activities are completed, we will begin the SQL upgrade process. Could you please confirm if this is the current plan and status?
+Let's schedule a call to discuss and capture all requirements in detail. Once we have the requirements documented and clarified, we will start working on the implementation.
 
-Also, to proceed further, I need the location of the SQL Server installation binaries/media. I assume these servers are not yet live in production, but please confirm. Thanks.
+Please let us know your availability, and we can arrange a meeting at a convenient time.
