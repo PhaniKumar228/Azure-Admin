@@ -1,5 +1,3 @@
-I can see that there was a parallel execution, and the output file appears to have been locked, which likely caused this failure.
+We have recycled the IIS services. As a result, the GL Feed runs may fail and might require a re-run.
 
-From the logs, I can also see that the application was able to establish a successful connection to SQL. Currently, I do not see any active connections related to this process.
-
-Could you please retry the job now and let us know if the issue persists?
+The Invesco-related issues have now been resolved. Could someone please validate and confirm the functionality of CashWire and 6540 transactions against Invesco?
