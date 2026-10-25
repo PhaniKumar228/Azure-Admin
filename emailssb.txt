@@ -1,5 +1,5 @@
-I have reviewed the server list and can see the below servers categorized under the SQL category.
+I can see that there was a parallel execution, and the output file appears to have been locked, which likely caused this failure.
 
-Let's schedule a call to discuss and capture all requirements in detail. Once we have the requirements documented and clarified, we will start working on the implementation.
+From the logs, I can also see that the application was able to establish a successful connection to SQL. Currently, I do not see any active connections related to this process.
 
-Please let us know your availability, and we can arrange a meeting at a convenient time.
+Could you please retry the job now and let us know if the issue persists?
