@@ -49,32 +49,32 @@ switch ([System.IO.Path]::GetExtension($SourceFile).ToLower())
 #-------------------------------------------------------------
 # Detect User ID column
 #-------------------------------------------------------------
-$UserIDColumn = $null
 
-$PossibleColumns = @(
-    "User ID",
-    "UserID",
-    "Userid",
-    "User_Id",
-    "ID"
-)
+# Auto-detect User ID column
 
-foreach($col in $PossibleColumns)
+$Columns = $ExportData[0].PSObject.Properties.Name
+
+Write-Host ""
+Write-Host "Columns discovered:"
+$Columns | ForEach-Object { Write-Host " - $_" }
+
+$UserIDColumn = $Columns | Where-Object {
+    $_ -match 'user.*id|userid|user_id|employee.*id|login.*id|account.*id'
+} | Select-Object -First 1
+
+if (-not $UserIDColumn)
 {
-    if($ExportData[0].PSObject.Properties.Name -contains $col)
-    {
-        $UserIDColumn = $col
-        break
-    }
-}
+    Write-Host ""
+    Write-Host "Unable to determine User ID column."
+    Write-Host "Columns found:"
+    $Columns
 
-if(!$UserIDColumn)
-{
-    Write-Error "Could not locate User ID column."
     exit
 }
 
-Write-Host "Using column: $UserIDColumn"
+Write-Host ""
+Write-Host "Detected User ID Column: $UserIDColumn"
+
 
 #-------------------------------------------------------------
 # Build Lookup
