@@ -62,3 +62,20 @@ FROM sys.databases d
 LEFT JOIN sys.dm_database_encryption_keys dek
     ON d.database_id = dek.database_id
 ORDER BY d.name;
+
+
+DECLARE @BackupPath NVARCHAR(4000) = N'E:\SQLBackups'; -- Change this
+
+SELECT
+    'BACKUP DATABASE [' + d.name + '] ' +
+    'TO DISK = N''' +
+    @BackupPath + '\' +
+    d.name + '_' +
+    CONVERT(VARCHAR(8), GETDATE(), 112) +
+    '.bak'' ' +
+    'WITH COPY_ONLY, INIT, COMPRESSION, CHECKSUM, STATS = 10;'
+AS BackupCommand
+FROM sys.databases d
+WHERE d.is_read_only = 1
+    AND d.state_desc = 'ONLINE'
+ORDER BY d.name;
