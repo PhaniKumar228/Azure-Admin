@@ -1,3 +1,3 @@
-findstr /i "\"vm_fqdn\" \"tag_name\" \"tag_description\" \"vm_site_managed_by\" \"category_name\" \"vm_os\" \"vm_sql_server\" \"vm_env\"" input.json
+We are actively working on the 1287* servers.
 
-Thank you for the update. We will proceed with the activities once the SC tasks have been raised for the UAT SQL Servers listed below.
+Regarding the 1317* servers, could you please confirm the database names from the list below so that we can proceed accordingly?
