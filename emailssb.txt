@@ -33,3 +33,32 @@ FROM sys.databases d
 LEFT JOIN sys.dm_database_encryption_keys dek
     ON d.database_id = dek.database_id
 ORDER BY d.name;
+
+
+
+
+SELECT
+    d.name AS DatabaseName,
+    d.state_desc AS DatabaseStatus,
+    dek.encryption_state,
+    CASE dek.encryption_state
+        WHEN 0 THEN 'No Database Encryption Key'
+        WHEN 1 THEN 'Unencrypted'
+        WHEN 2 THEN 'Encryption In Progress'
+        WHEN 3 THEN 'Encrypted'
+        WHEN 4 THEN 'Key Change In Progress'
+        WHEN 5 THEN 'Decryption In Progress'
+        WHEN 6 THEN 'Protection Change In Progress'
+        ELSE 'TDE Not Configured'
+    END AS EncryptionStateDesc,
+    dek.encryptor_type,
+    dek.key_algorithm,
+    dek.key_length,
+    CASE
+        WHEN d.state_desc = 'ONLINE' THEN 'Yes'
+        ELSE 'No'
+    END AS IsReady
+FROM sys.databases d
+LEFT JOIN sys.dm_database_encryption_keys dek
+    ON d.database_id = dek.database_id
+ORDER BY d.name;
