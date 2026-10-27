@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Server Database Comparison Report</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;color:#2d3748;font-size:14px;line-height:1.5}
+
+/* ── Header ── */
+.header{background:linear-gradient(135deg,#1a365d 0%,#2b6cb0 100%);color:#fff;padding:28px 40px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+.header h1{font-size:22px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:10px}
+.header .sub{font-size:12px;opacity:.8;margin-top:5px}
+.header .meta{text-align:right;font-size:12px;opacity:.85;line-height:2}
+
+/* ── Server Banner ── */
+.srv-banner{display:flex}
+.srv-card{flex:1;padding:16px 32px;display:flex;align-items:center;gap:16px;color:#fff}
+.srv-card.src{background:#1a4731;border-right:3px solid #0d1f15}
+.srv-card.tgt{background:#1a3a5c}
+.srv-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.srv-card.src .srv-icon{background:#276749}
+.srv-card.tgt .srv-icon{background:#2b4c7e}
+.srv-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;opacity:.7}
+.srv-name{font-size:17px;font-weight:700;margin-top:2px}
+.srv-ver{font-size:11px;opacity:.65;margin-top:3px}
+
+/* ── Summary ── */
+.summary{background:#fff;padding:24px 40px;border-bottom:1px solid #e2e8f0}
+.summary h2{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:#4a5568;margin-bottom:16px}
+.cards{display:flex;gap:16px;flex-wrap:wrap}
+.card{flex:1;min-width:155px;padding:18px 20px;border-radius:10px}
+.card.blue  {background:#ebf8ff;border-left:4px solid #3182ce}
+.card.green {background:#f0fff4;border-left:4px solid #38a169}
+.card.red   {background:#fff5f5;border-left:4px solid #e53e3e}
+.card.orange{background:#fffaf0;border-left:4px solid #dd6b20}
+.card .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#718096}
+.card .val{font-size:32px;font-weight:800;margin-top:4px}
+.card.blue  .val{color:#2b6cb0}
+.card.green .val{color:#276749}
+.card.red   .val{color:#c53030}
+.card.orange .val{color:#c05621}
+
+/* ── Content area ── */
+.content{padding:30px 40px}
+
+/* ── DB Block ── */
+.db-block{background:#fff;border-radius:12px;box-shadow:0 1px 8px rgba(0,0,0,.08);margin-bottom:28px;overflow:hidden;border:1px solid #e2e8f0}
+.db-head{padding:15px 24px;display:flex;justify-content:space-between;align-items:center;background:#f7fafc;border-bottom:1px solid #e2e8f0}
+.db-head h3{font-size:15px;font-weight:700;color:#1a202c;display:flex;align-items:center;gap:9px}
+.db-right{display:flex;align-items:center;gap:12px}
+.db-meta{font-size:11px;color:#a0aec0}
+.badge{padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.badge.diff{background:#fed7d7;color:#c53030}
+.badge.ok  {background:#c6f6d5;color:#276749}
+
+/* ── Table ── */
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 20px;font-size:10.5px;text-transform:uppercase;letter-spacing:.9px;font-weight:700;background:#edf2f7;color:#4a5568;text-align:left;border-bottom:2px solid #cbd5e0}
+thead th:first-child{width:30%}
+thead th:nth-child(2),thead th:nth-child(3){width:30%}
+thead th:last-child{width:10%;text-align:center}
+tbody tr{border-bottom:1px solid #e2e8f0;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f7fafc}
+td{padding:9px 20px;vertical-align:middle}
+.pn{font-weight:600;color:#4a5568;font-size:13px}
+.pv{font-family:'Courier New',monospace;font-size:12.5px;color:#2d3748}
+
+/* ── Row states ── */
+.r-diff td{background:#fff5f5!important}
+.r-diff td:first-child{border-left:3px solid #e53e3e;padding-left:17px}
+.r-diff .pn{color:#c53030}
+.r-info td{background:#fafafa!important}
+.r-info td:first-child{border-left:3px solid #cbd5e0;padding-left:17px}
+
+/* ── Value indicators ── */
+.si{text-align:center;font-size:15px}
+.v-ok  {color:#38a169;font-size:16px}
+.v-diff{color:#e53e3e;font-weight:700;font-size:16px}
+.v-info{color:#cbd5e0;font-size:14px}
+.pv.hi-diff{color:#e53e3e;font-weight:700;background:#fff0f0;border-radius:4px;padding:1px 5px}
+.pv.hi-info{color:#a0aec0;font-style:italic}
+
+/* ── Section label ── */
+.sec-lbl td{padding:6px 20px;background:#edf2f7;font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:#718096;font-weight:700}
+
+/* ── Legend ── */
+.legend{display:flex;gap:20px;padding:10px 22px;background:#f7fafc;border-top:1px solid #e2e8f0;font-size:11px;color:#4a5568}
+.ld{display:flex;align-items:center;gap:5px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.d{background:#e53e3e}.dot.m{background:#38a169}.dot.i{background:#a0aec0}
+
+/* ── Comments ── */
+.cmts{background:#fff;border-radius:12px;box-shadow:0 1px 8px rgba(0,0,0,.08);margin-bottom:28px;overflow:hidden;border:1px solid #e2e8f0}
+.cmts-head{padding:15px 24px;background:#fffbeb;border-bottom:1px solid #faf089;display:flex;align-items:center;gap:10px}
+.cmts-head h3{font-size:15px;font-weight:700;color:#744210}
+.cmts-body{padding:6px 0}
+.ci{display:flex;gap:12px;padding:11px 24px;border-bottom:1px solid #f7fafc;align-items:flex-start}
+.ci:last-child{border-bottom:none}
+.ci:hover{background:#fffdf0}
+.ci-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+.ct{display:inline-block;padding:2px 8px;border-radius:4px;font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;margin-right:7px}
+.ct.warning{background:#fefcbf;color:#744210}
+.ct.error  {background:#fed7d7;color:#c53030}
+.ct.info   {background:#bee3f8;color:#2b6cb0}
+.ct.success{background:#c6f6d5;color:#276749}
+.cm{font-size:13px;color:#4a5568}
+
+/* ── Footer ── */
+footer{text-align:center;padding:24px;color:#a0aec0;font-size:11px;border-top:1px solid #e2e8f0;background:#fff;margin-top:10px}
+footer strong{color:#718096}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div>
+    <h1>📊 SQL Server Database Comparison Report</h1>
+    <div class="sub">Property-level comparison &bull; SMO + sys.databases &bull; Compare-SqlDatabases.ps1</div>
+  </div>
+  <div class="meta">
+    <div>📅 Generated: 2026-10-27 15:45:02</div>
+    <div>Databases Compared: <strong>3</strong></div>
+    <div>Script Version: 1.0.0</div>
+  </div>
+</div>
+
+<!-- ═══ SERVER BANNER ═══ -->
+<div class="srv-banner">
+  <div class="srv-card src">
+    <div class="srv-icon">💾</div>
+    <div>
+      <div class="srv-lbl">Source Server</div>
+      <div class="srv-name">SQL-PROD-01</div>
+      <div class="srv-ver">SQL Server 2019 (15.0.4375) &bull; Enterprise Edition</div>
+    </div>
+  </div>
+  <div class="srv-card tgt">
+    <div class="srv-icon">🎯</div>
+    <div>
+      <div class="srv-lbl">Target Server</div>
+      <div class="srv-name">SQL-DR-02</div>
+      <div class="srv-ver">SQL Server 2019 (15.0.4375) &bull; Enterprise Edition</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SUMMARY ═══ -->
+<div class="summary">
+  <h2>📈 Comparison Summary</h2>
+  <div class="cards">
+    <div class="card blue" ><div class="lbl">Databases Compared</div><div class="val">3</div></div>
+    <div class="card green"><div class="lbl">Fully Matching</div><div class="val">1</div></div>
+    <div class="card red"  ><div class="lbl">Databases with Differences</div><div class="val">2</div></div>
+    <div class="card orange"><div class="lbl">Total Property Differences</div><div class="val">9</div></div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ═══ DATABASE 1: SalesDB — HAS DIFFERENCES ═══ -->
+<div class="db-block">
+  <div class="db-head">
+    <h3>🗄 SalesDB</h3>
+    <div class="db-right">
+      <span class="db-meta">34 properties compared</span>
+      <span class="badge diff">⚠ 5 Difference(s)</span>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>💾 Source — SQL-PROD-01</th>
+        <th>🎯 Target — SQL-DR-02</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- INFORMATIONAL -->
+      <tr class="sec-lbl"><td colspan="4">📊 Informational</td></tr>
+      <tr class="r-info">
+        <td><span class="pn">DatabaseName</span></td>
+        <td><span class="pv hi-info">SalesDB</span></td>
+        <td><span class="pv hi-info">SalesDB</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">CreateDate</span></td>
+        <td><span class="pv hi-info">2021-03-15 09:00:00</span></td>
+        <td><span class="pv hi-info">2021-03-15 09:00:00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">DataSizeMB</span></td>
+        <td><span class="pv hi-info">48,320.00</span></td>
+        <td><span class="pv hi-info">48,290.50</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">LogSizeMB</span></td>
+        <td><span class="pv hi-info">4,096.00</span></td>
+        <td><span class="pv hi-info">2,048.00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <!-- CONFIGURATION -->
+      <tr class="sec-lbl"><td colspan="4">⚙ Configuration Properties</td></tr>
+      <tr>
+        <td><span class="pn">CompatibilityLevel</span></td>
+        <td><span class="pv">150</span></td>
+        <td><span class="pv">150</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">Collation</span></td>
+        <td><span class="pv">SQL_Latin1_General_CP1_CI_AS</span></td>
+        <td><span class="pv">SQL_Latin1_General_CP1_CI_AS</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">RecoveryModel</span></td>
+        <td><span class="pv hi-diff">FULL</span></td>
+        <td><span class="pv hi-diff">SIMPLE</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">State</span></td>
+        <td><span class="pv">ONLINE</span></td>
+        <td><span class="pv">ONLINE</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">UserAccess</span></td>
+        <td><span class="pv">MULTI_USER</span></td>
+        <td><span class="pv">MULTI_USER</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ReadOnly</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoClose</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoShrink</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoCreateStats</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoUpdateStats</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">FullTextEnabled</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">PageVerify</span></td>
+        <td><span class="pv">CHECKSUM</span></td>
+        <td><span class="pv">CHECKSUM</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">LogReuseWait</span></td>
+        <td><span class="pv">NOTHING</span></td>
+        <td><span class="pv">NOTHING</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">Encrypted</span></td>
+        <td><span class="pv hi-diff">1</span></td>
+        <td><span class="pv hi-diff">0</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">Trustworthy</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">DBChaining</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">BrokerEnabled</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">SnapshotIsolation</span></td>
+        <td><span class="pv hi-diff">ON</span></td>
+        <td><span class="pv hi-diff">OFF</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">ReadCommittedSnapshot</span></td>
+        <td><span class="pv hi-diff">1</span></td>
+        <td><span class="pv hi-diff">0</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSINullDefault</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSINulls</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSIPadding</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSIWarnings</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ArithAbort</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ConcatNullYieldsNull</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">NumericRoundAbort</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">QuotedIdentifier</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">RecursiveTriggers</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">CursorCloseOnCommit</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">LocalCursorDefault</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">ForcedParameterization</span></td>
+        <td><span class="pv hi-diff">1</span></td>
+        <td><span class="pv hi-diff">0</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="legend">
+    <span class="ld"><span class="dot d"></span> Mismatch</span>
+    <span class="ld"><span class="dot m"></span> Match</span>
+    <span class="ld"><span class="dot i"></span> Informational (not compared)</span>
+  </div>
+</div>
+
+<!-- ═══ DATABASE 2: HRSystem — HAS DIFFERENCES ═══ -->
+<div class="db-block">
+  <div class="db-head">
+    <h3>🗄 HRSystem</h3>
+    <div class="db-right">
+      <span class="db-meta">34 properties compared</span>
+      <span class="badge diff">⚠ 4 Difference(s)</span>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>💾 Source — SQL-PROD-01</th>
+        <th>🎯 Target — SQL-DR-02</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="sec-lbl"><td colspan="4">📊 Informational</td></tr>
+      <tr class="r-info">
+        <td><span class="pn">DatabaseName</span></td>
+        <td><span class="pv hi-info">HRSystem</span></td>
+        <td><span class="pv hi-info">HRSystem</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">CreateDate</span></td>
+        <td><span class="pv hi-info">2019-08-22 14:30:00</span></td>
+        <td><span class="pv hi-info">2019-08-22 14:30:00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">DataSizeMB</span></td>
+        <td><span class="pv hi-info">12,800.00</span></td>
+        <td><span class="pv hi-info">12,795.25</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">LogSizeMB</span></td>
+        <td><span class="pv hi-info">1,024.00</span></td>
+        <td><span class="pv hi-info">512.00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="sec-lbl"><td colspan="4">⚙ Configuration Properties</td></tr>
+      <tr class="r-diff">
+        <td><span class="pn">CompatibilityLevel</span></td>
+        <td><span class="pv hi-diff">150</span></td>
+        <td><span class="pv hi-diff">140</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">Collation</span></td>
+        <td><span class="pv hi-diff">SQL_Latin1_General_CP1_CI_AS</span></td>
+        <td><span class="pv hi-diff">Latin1_General_CI_AS</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">RecoveryModel</span></td>
+        <td><span class="pv">FULL</span></td>
+        <td><span class="pv">FULL</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">State</span></td>
+        <td><span class="pv">ONLINE</span></td>
+        <td><span class="pv">ONLINE</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">UserAccess</span></td>
+        <td><span class="pv">MULTI_USER</span></td>
+        <td><span class="pv">MULTI_USER</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ReadOnly</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoClose</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">AutoShrink</span></td>
+        <td><span class="pv hi-diff">0</span></td>
+        <td><span class="pv hi-diff">1</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoCreateStats</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">AutoUpdateStats</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">FullTextEnabled</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">PageVerify</span></td>
+        <td><span class="pv">CHECKSUM</span></td>
+        <td><span class="pv">CHECKSUM</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">LogReuseWait</span></td>
+        <td><span class="pv">LOG_BACKUP</span></td>
+        <td><span class="pv">LOG_BACKUP</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">Encrypted</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr class="r-diff">
+        <td><span class="pn">Trustworthy</span></td>
+        <td><span class="pv hi-diff">0</span></td>
+        <td><span class="pv hi-diff">1</span></td>
+        <td class="si"><span class="v-diff">✗</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">DBChaining</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">BrokerEnabled</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">SnapshotIsolation</span></td>
+        <td><span class="pv">OFF</span></td>
+        <td><span class="pv">OFF</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ReadCommittedSnapshot</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSINullDefault</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSINulls</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSIPadding</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ANSIWarnings</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ArithAbort</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ConcatNullYieldsNull</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">NumericRoundAbort</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">QuotedIdentifier</span></td>
+        <td><span class="pv">1</span></td>
+        <td><span class="pv">1</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">RecursiveTriggers</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">CursorCloseOnCommit</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">LocalCursorDefault</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+      <tr>
+        <td><span class="pn">ForcedParameterization</span></td>
+        <td><span class="pv">0</span></td>
+        <td><span class="pv">0</span></td>
+        <td class="si"><span class="v-ok">✓</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="legend">
+    <span class="ld"><span class="dot d"></span> Mismatch</span>
+    <span class="ld"><span class="dot m"></span> Match</span>
+    <span class="ld"><span class="dot i"></span> Informational (not compared)</span>
+  </div>
+</div>
+
+<!-- ═══ DATABASE 3: InventoryDB — IDENTICAL ═══ -->
+<div class="db-block">
+  <div class="db-head">
+    <h3>🗄 InventoryDB</h3>
+    <div class="db-right">
+      <span class="db-meta">34 properties compared</span>
+      <span class="badge ok">✓ Identical</span>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>💾 Source — SQL-PROD-01</th>
+        <th>🎯 Target — SQL-DR-02</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="sec-lbl"><td colspan="4">📊 Informational</td></tr>
+      <tr class="r-info">
+        <td><span class="pn">DatabaseName</span></td>
+        <td><span class="pv hi-info">InventoryDB</span></td>
+        <td><span class="pv hi-info">InventoryDB</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">CreateDate</span></td>
+        <td><span class="pv hi-info">2020-11-05 08:15:00</span></td>
+        <td><span class="pv hi-info">2020-11-05 08:15:00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">DataSizeMB</span></td>
+        <td><span class="pv hi-info">7,680.00</span></td>
+        <td><span class="pv hi-info">7,675.50</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="r-info">
+        <td><span class="pn">LogSizeMB</span></td>
+        <td><span class="pv hi-info">768.00</span></td>
+        <td><span class="pv hi-info">512.00</span></td>
+        <td class="si"><span class="v-info">—</span></td>
+      </tr>
+      <tr class="sec-lbl"><td colspan="4">⚙ Configuration Properties</td></tr>
+      <tr><td><span class="pn">CompatibilityLevel</span></td><td><span class="pv">150</span></td><td><span class="pv">150</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">Collation</span></td><td><span class="pv">SQL_Latin1_General_CP1_CI_AS</span></td><td><span class="pv">SQL_Latin1_General_CP1_CI_AS</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">RecoveryModel</span></td><td><span class="pv">FULL</span></td><td><span class="pv">FULL</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">State</span></td><td><span class="pv">ONLINE</span></td><td><span class="pv">ONLINE</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">UserAccess</span></td><td><span class="pv">MULTI_USER</span></td><td><span class="pv">MULTI_USER</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ReadOnly</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">AutoClose</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">AutoShrink</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">AutoCreateStats</span></td><td><span class="pv">1</span></td><td><span class="pv">1</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">AutoUpdateStats</span></td><td><span class="pv">1</span></td><td><span class="pv">1</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">FullTextEnabled</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">PageVerify</span></td><td><span class="pv">CHECKSUM</span></td><td><span class="pv">CHECKSUM</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">LogReuseWait</span></td><td><span class="pv">NOTHING</span></td><td><span class="pv">NOTHING</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">Encrypted</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">Trustworthy</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">DBChaining</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">BrokerEnabled</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">SnapshotIsolation</span></td><td><span class="pv">OFF</span></td><td><span class="pv">OFF</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ReadCommittedSnapshot</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ANSINullDefault</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ANSINulls</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ANSIPadding</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ANSIWarnings</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ArithAbort</span></td><td><span class="pv">1</span></td><td><span class="pv">1</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ConcatNullYieldsNull</span></td><td><span class="pv">1</span></td><td><span class="pv">1</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">NumericRoundAbort</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">QuotedIdentifier</span></td><td><span class="pv">1</span></td><td><span class="pv">1</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">RecursiveTriggers</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">CursorCloseOnCommit</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">LocalCursorDefault</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+      <tr><td><span class="pn">ForcedParameterization</span></td><td><span class="pv">0</span></td><td><span class="pv">0</span></td><td class="si"><span class="v-ok">✓</span></td></tr>
+    </tbody>
+  </table>
+  <div class="legend">
+    <span class="ld"><span class="dot d"></span> Mismatch</span>
+    <span class="ld"><span class="dot m"></span> Match</span>
+    <span class="ld"><span class="dot i"></span> Informational (not compared)</span>
+  </div>
+</div>
+
+<!-- ═══ COMMENTS ═══ -->
+<div class="cmts">
+  <div class="cmts-head">
+    <span style="font-size:20px">📌</span>
+    <h3>Notes &amp; Observations (11)</h3>
+  </div>
+  <div class="cmts-body">
+    <div class="ci"><span class="ci-ico">✅</span><div><span class="ct success">success</span><span class="cm">SMO assemblies loaded successfully via the SqlServer module.</span></div></div>
+    <div class="ci"><span class="ci-ico">ℹ</span><div><span class="ct info">info</span><span class="cm">Source: SQL-PROD-01 — SQL Server 15.0.4375.4 (2019), Enterprise Edition (64-bit).</span></div></div>
+    <div class="ci"><span class="ci-ico">ℹ</span><div><span class="ct info">info</span><span class="cm">Target: SQL-DR-02 — SQL Server 15.0.4375.4 (2019), Enterprise Edition (64-bit).</span></div></div>
+    <div class="ci"><span class="ci-ico">ℹ</span><div><span class="ct info">info</span><span class="cm">Source 'All' mode: found 3 user database(s) on SQL-PROD-01 (SalesDB, HRSystem, InventoryDB).</span></div></div>
+    <div class="ci"><span class="ci-ico">ℹ</span><div><span class="ct info">info</span><span class="cm">Target 'All' mode: found 3 user database(s) on SQL-DR-02 (SalesDB, HRSystem, InventoryDB).</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">SalesDB — 5 difference(s) in: RecoveryModel, Encrypted, SnapshotIsolation, ReadCommittedSnapshot, ForcedParameterization.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">SalesDB: RecoveryModel is FULL on source but SIMPLE on DR target. The DR copy will not support point-in-time log restores — review your DR backup strategy.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">SalesDB: Transparent Data Encryption (TDE) is ENABLED on source but DISABLED on target. Sensitive data on the DR replica may be unprotected at rest.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">HRSystem — 4 difference(s) in: CompatibilityLevel, Collation, AutoShrink, Trustworthy.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">HRSystem: CompatibilityLevel is 150 on source but 140 on target. Query optimizer behaviour may differ, causing performance discrepancies on failover.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">HRSystem: Collation mismatch (SQL_Latin1_General_CP1_CI_AS vs Latin1_General_CI_AS). Cross-database collation conflicts may cause runtime errors on the target.</span></div></div>
+    <div class="ci"><span class="ci-ico">⚠</span><div><span class="ct warning">warning</span><span class="cm">HRSystem: Trustworthy is OFF on source but ON on target. Elevated trust on the DR server is a security risk — review EXECUTE AS and cross-database chaining usage.</span></div></div>
+    <div class="ci"><span class="ci-ico">✅</span><div><span class="ct success">success</span><span class="cm">InventoryDB — all 30 compared properties are identical on both servers.</span></div></div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<footer>
+  Generated by <strong>Compare-SqlDatabases.ps1</strong> &bull; 2026-10-27 15:45:02 &bull;
+  <strong>SQL-PROD-01</strong> &rarr; <strong>SQL-DR-02</strong> &bull; 3 databases &bull; 9 total differences
+</footer>
+
+</body>
+</html>
