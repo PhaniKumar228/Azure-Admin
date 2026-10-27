@@ -1,3 +1,1 @@
-We have recycled the IIS services. As a result, the GL Feed runs may fail and might require a re-run.
-
-The Invesco-related issues have now been resolved. Could someone please validate and confirm the functionality of CashWire and 6540 transactions against Invesco?
+findstr /i "\"vm_fqdn\" \"tag_name\" \"tag_description\" \"vm_site_managed_by\" \"category_name\" \"vm_os\" \"vm_sql_server\" \"vm_env\"" input.json
