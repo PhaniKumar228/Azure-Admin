@@ -1,3 +1,35 @@
 We are actively working on the 1287* servers.
 
 Regarding the 1317* servers, could you please confirm the database names from the list below so that we can proceed accordingly?
+
+
+SELECT
+    DB_NAME(database_id) AS DatabaseName,
+    encryption_state,
+    CASE encryption_state
+        WHEN 0 THEN 'No Database Encryption Key'
+        WHEN 1 THEN 'Unencrypted'
+        WHEN 2 THEN 'Encryption In Progress'
+        WHEN 3 THEN 'Encrypted'
+        WHEN 4 THEN 'Key Change In Progress'
+        WHEN 5 THEN 'Decryption In Progress'
+        WHEN 6 THEN 'Protection Change In Progress'
+    END AS EncryptionStateDesc,
+    encryptor_type,
+    key_algorithm,
+    key_length
+FROM sys.dm_database_encryption_keys
+ORDER BY DatabaseName;
+
+SELECT
+    d.name,
+    CASE
+        WHEN dek.database_id IS NOT NULL
+             AND dek.encryption_state = 3
+        THEN 'Enabled'
+        ELSE 'Disabled'
+    END AS TDE_Status
+FROM sys.databases d
+LEFT JOIN sys.dm_database_encryption_keys dek
+    ON d.database_id = dek.database_id
+ORDER BY d.name;
