@@ -79,3 +79,8 @@ FROM sys.databases d
 WHERE d.is_read_only = 1
     AND d.state_desc = 'ONLINE'
 ORDER BY d.name;
+
+
+We have completed moving the requested databases from the source servers to the target servers. Please proceed with testing on the 169* server.
+
+The migration activity for the 172* server is still in progress. We expect to complete it and hand it over during the early hours tomorrow.
