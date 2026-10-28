@@ -109,3 +109,24 @@ New Build Server: 1.0 TB
 Matching the existing server capacity will help ensure sufficient space for database growth and ongoing migration activities.
 
 Please let us know if any additional information is required.
+
+
+
+Invoke-Command -ComputerName SQLSERVER01 {
+    Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL'
+}
+
+Invoke-Command -ComputerName SQLSERVER01 {
+    Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server' |
+    Where-Object {$_.PSChildName -match '^MSSQL'} |
+    ForEach-Object {
+        Get-ItemProperty "$($_.PSPath)\MSSQLServer\CurrentVersion" -ErrorAction SilentlyContinue
+    }
+}
+
+Get-CimInstance Win32_Service -ComputerName SQLSERVER01 |
+Where-Object {$_.Name -like 'MSSQL*'} |
+Select-Object PSComputerName,Name,State,
+@{N='Version';E={(Get-Item $_.PathName.Replace('"','').Split(' ')[0]).VersionInfo.ProductVersion}}
+
+Get-CimInstance Win32_Service -ComputerName SQL01,SQL02 -Filter "Name LIKE 'MSSQL%'" | Select PSComputerName,Name,State
