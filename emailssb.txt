@@ -84,3 +84,14 @@ ORDER BY d.name;
 We have completed moving the requested databases from the source servers to the target servers. Please proceed with testing on the 169* server.
 
 The migration activity for the 172* server is still in progress. We expect to complete it and hand it over during the early hours tomorrow.
+
+
+Get-CimInstance Win32_LogicalDisk -ComputerName Server1,Server2 -Filter "DriveType=3" |
+Select-Object PSComputerName,DeviceID,@{Name='SizeTB';Expression={[math]::Round($_.Size/1TB,2)}},@{Name='FreeTB';Expression={[math]::Round($_.FreeSpace/1TB,2)}} |
+Sort-Object DeviceID |
+Format-Table -AutoSize
+
+Get-CimInstance Win32_LogicalDisk -ComputerName Server1,Server2 -Filter "DriveType=3" |
+Select-Object PSComputerName,DeviceID,@{N='SizeTB';E={[math]::Round($_.Size/1TB,2)}},@{N='FreeTB';E={[math]::Round($_.FreeSpace/1TB,2)}} |
+Sort-Object PSComputerName,DeviceID |
+ft -AutoSize
