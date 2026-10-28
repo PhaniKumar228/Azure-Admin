@@ -95,3 +95,17 @@ Get-CimInstance Win32_LogicalDisk -ComputerName Server1,Server2 -Filter "DriveTy
 Select-Object PSComputerName,DeviceID,@{N='SizeTB';E={[math]::Round($_.Size/1TB,2)}},@{N='FreeTB';E={[math]::Round($_.FreeSpace/1TB,2)}} |
 Sort-Object PSComputerName,DeviceID |
 ft -AutoSize
+
+
+We have completed the migration/restoration of a few databases on the 172 server. During the activity, we identified a storage capacity constraint on the new build server.
+
+Could you please extend the storage capacity on the new build server to match the existing server?
+
+Current Capacity Comparison:
+
+Existing Server: 1.8 TB
+New Build Server: 1.0 TB
+
+Matching the existing server capacity will help ensure sufficient space for database growth and ongoing migration activities.
+
+Please let us know if any additional information is required.
