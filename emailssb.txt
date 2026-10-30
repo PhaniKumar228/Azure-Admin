@@ -1,3 +1,6 @@
+This looks like a code-level issue. We found that PAMMenu is using a CLIENT connection in connect.xml instead of ODBC. The connection is failing due to missing authentication settings and appears to be expecting Azure AD authentication only. Is any developer available now to review and test?
+
+
 We are actively working on the 1287* servers.
 
 Regarding the 1317* servers, could you please confirm the database names from the list below so that we can proceed accordingly?
