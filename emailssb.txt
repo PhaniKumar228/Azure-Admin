@@ -143,3 +143,12 @@ We do not have access to SQL Server. It appears the required AD groups have not 
 The SQL Server services are currently running under local accounts. Ideally, these should be configured to run under the designated service accounts.
 
 Could someone please look into these items at the earliest? If needed, we can jump on a quick call to discuss.
+
+
+
+
+Short Description:
+ Urgent SPN Cleanup Required for HADR Setup
+
+Description:
+ Please remove unwanted/duplicate SPNs associated with the SQL Server service account. These stale SPNs are currently blocking SQL Server HADR (Always On AG) configuration. Immediate assistance is required to validate and clean up the SPNs so the HADR setup can proceed. Business-critical migration activities are on hold until this issue is resolved. Priority: High/Urgent.
