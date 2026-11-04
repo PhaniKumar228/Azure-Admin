@@ -1,10 +1,11 @@
-Review & Confirmation Required – Database Restore Activity Scheduled for Tomorrow
+I have a question regarding the proposal to move to Patch-04. We currently do not have a summary or clear rationale explaining why we are considering reverting to this patch level.
 
+As per the email below, PFI 2026 Patch-06 includes a bug fix related to the ZAP Utility SPN functionality. My understanding is that on patch levels below Patch-06, the ZAP utility has issues working with SPN-based authentication.
 
-As discussed in today’s call, I am sharing the source server, database, login, and target server details for review.
+Given that, moving back to Patch-04 may reintroduce the known ZAP Utility/SPN issue that Patch-06 was intended to resolve. Before proceeding, could we please clarify:
 
-Please review and confirm the database and login information. We can see the database size is approximately 220 GB, and the estimated duration for the restore activity is around 1 hour.
+What is driving the recommendation to move to Patch-04?
+Has the impact on the ZAP Utility SPN functionality been evaluated?
+Are there any workarounds or alternative fixes available if the Patch-06 bug fix is no longer present?
 
-Once we receive your confirmation, we will proceed with the restore activities tomorrow as planned.
-
-Thank you.
+It would be helpful to understand the technical justification and potential risks before making the change.
