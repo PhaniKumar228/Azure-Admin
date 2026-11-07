@@ -1,3 +1,1 @@
-Thank you for the update. Acknowledged.
-
-We will perform the database refresh during the scheduled time window mentioned below.
+Performed post-validation checks. All SQL Server services are up and running successfully with no issues reported in the logs. Database health checks were also completed, and all databases are healthy with no issues identified.
