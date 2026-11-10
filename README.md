@@ -1,5 +1,1 @@
-We have completed the database refresh from the source server to the target server.
-
-Could you please perform the application validation and let us know if everything is working as expected?
-
-Note: Once we receive confirmation that the database is functioning correctly on the target server, we will proceed with adding it to the Availability Group (AG).
+We were able to successfully test TEST2 on Friday and received confirmation from the team. Let me check with the team whether any changes were made to the pamdatabase.ini file and get back to you.
