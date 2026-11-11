@@ -1,3 +1,11 @@
-The restore failed due to active transactions from the application. I can see that the database files were already copied successfully; however, the restore process was unable to acquire the required database lock because of ongoing application connections and transactions.
+Urgent Assistance Required – Migration Activity
 
-Please confirm if we can proceed with terminating all active sessions and transactions so that we can perform the refresh. The database will be unavailable for approximately 15 minutes during the restore process. Once the restore is completed, application connectivity can be resumed.
+Hi Team,
+
+Could someone please help us with this on priority?
+
+We have already shared the required passwords via an encrypted email. This request is part of the ongoing migration activities and is currently blocking our progress.
+
+We would appreciate your immediate assistance so that we can proceed with the planned migration tasks and avoid any delays.
+
+Please let us know if any additional information is required from our side.
