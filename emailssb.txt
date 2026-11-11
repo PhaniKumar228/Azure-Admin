@@ -40,3 +40,20 @@ WHERE dp.type = 'S'
 AND dp.principal_id > 4
 AND sp.name IS NULL
 ORDER BY dp.name;
+
+
+DECLARE @sql nvarchar(max)='';
+
+SELECT @sql = @sql +
+'IF NOT EXISTS (SELECT 1 FROM sys.server_principals WHERE name = ''' + dp.name + ''')
+CREATE LOGIN [' + dp.name + '] FROM WINDOWS;
+'
+FROM sys.database_principals dp
+LEFT JOIN sys.server_principals sp
+ON dp.name = sp.name
+WHERE dp.type='S'
+AND dp.principal_id > 4
+AND sp.name IS NULL;
+
+PRINT @sql;
+-- EXEC(@sql);
