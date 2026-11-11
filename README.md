@@ -1,11 +1,16 @@
-Urgent Assistance Required – Migration Activity
 
-Hi Team,
+# Check SQL encryption settings
+Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL*\MSSQLServer\SuperSocketNetLib'
 
-Could someone please help us with this on priority?
+# List server certificates
+Get-ChildItem Cert:\LocalMachine\My |
+Select Subject,Issuer,Thumbprint,NotAfter
 
-We have already shared the required passwords via an encrypted email. This request is part of the ongoing migration activities and is currently blocking our progress.
+# Check root CA trust
+Get-ChildItem Cert:\LocalMachine\Root |
+Select Subject
 
-We would appreciate your immediate assistance so that we can proceed with the planned migration tasks and avoid any delays.
+Get-ChildItem Cert:\LocalMachine\My |
+Select Subject,Issuer,Thumbprint,NotAfter
 
-Please let us know if any additional information is required from our side.
+Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Microsoft SQL Server\MSSQL*\MSSQLServer\SuperSocketNetLib'
