@@ -57,3 +57,8 @@ AND sp.name IS NULL;
 
 PRINT @sql;
 -- EXEC(@sql);
+
+
+We have completed the database refresh successfully.
+
+Please proceed with your application validation and testing activities. Let us know if you encounter any issues or observe any unexpected behavior during testing, and we will investigate them on priority.
