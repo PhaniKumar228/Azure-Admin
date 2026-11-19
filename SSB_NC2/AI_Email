@@ -1,0 +1,49 @@
+Subject:
+
+[APP NAME] - Daily Status Update - DD Mon YYYY
+
+Email Template
+
+Hi Team,
+
+Please find below the daily status update for [APP NAME] as of [Date].
+
+Workstream	Status	Comments / Progress	Owner	Target Date
+SQL Upgrade	🟢 On Track	Completed in DEV. UAT scheduled.	DBA Team	DD-MMM
+SQL Patch	🟢 On Track	Monthly patching completed successfully.	DBA Team	DD-MMM
+GSA	🟡 In Progress	Awaiting application validation.	App Team	DD-MMM
+HA	🟢 Completed	HA configuration validated successfully.	Infra Team	DD-MMM
+SSI	🟡 In Progress	Access review ongoing.	Security Team	DD-MMM
+CyberArk	🔴 At Risk	Pending PAM account onboarding.	Security Team	DD-MMM
+CAPAM	🟡 In Progress	Service account testing ongoing.	Security Team	DD-MMM
+CMDB	🟢 Completed	Configuration items updated.	Service Management	DD-MMM
+APMD	🟡 In Progress	Dependent on CAPAM completion.	Security Team	DD-MMM
+AutoSys	🟢 Completed	Job validation completed successfully.	Scheduling Team	DD-MMM
+Monitoring	🟢 Completed	Monitoring alerts validated.	Monitoring Team	DD-MMM
+Key Highlights
+✅ SQL Upgrade activities progressing as planned.
+✅ HA, CMDB, AutoSys and Monitoring activities completed.
+⚠️ CAPAM and CyberArk onboarding activities remain the primary dependency.
+⚠️ APMD completion depends on successful CAPAM implementation.
+✅ No critical issues impacting project timeline at this time.
+Risks / Blockers
+Item	Impact	Action Required
+CyberArk onboarding pending	May delay application cutover	Security team support required
+CAPAM validation pending	Blocks APMD completion	Follow-up with PAM team
+Next 24 Hours
+Complete CAPAM validation.
+Complete APMD testing.
+Perform UAT support activities.
+Track closure of any open issues.
+
+Overall Project Status: 🟡 In Progress
+
+Regards,
+ Phanikumar Bellamkonda
+ Expert Database Administrator
+ Ensono DBA Team
+
+Status Legend
+🟢 On Track / Completed
+🟡 In Progress / Attention Required
+🔴 At Risk / Blocked
