@@ -1,13 +1,1 @@
-Issue: IIS server is not able to connect to SQL Server. Initial testing indicates the connection is failing before reaching SQL Server (Error: Connection failed to SQL Server).
-
-Actions Taken:
-
-Tested connectivity from the IIS server and confirmed the application is unable to establish a connection to SQL Server.
-Application team tested connectivity locally from the SQL Server side. The SQL Server was reachable, but the connection failed with a bad password/login authentication error.
-
-Next Actions:
-
-Obtain the correct application database account password/credentials.
-Test SQL connectivity directly using the application account from the IIS server.
-Validate the connection string and confirm authentication is successful.
-Continue troubleshooting based on the test results.
+Script shared by Santhanu used a Domain ID, but the application required SQL logins. We dropped and recreated the SQL logins, but the issue remained because the Cloakware sync was broken. CAPAM team re-synced the account, recreated the alias, remapped credentials, and rotated the password. After the sync was restored, the application started working successfully.
