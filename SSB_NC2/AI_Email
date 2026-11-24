@@ -1,8 +1,27 @@
-SELECT
-    @@SERVERNAME AS ServerName,
-    DB_NAME(database_id) AS DatabaseName,
-    CAST(SUM(size) * 8.0 / 1024 / 1024 AS DECIMAL(18,2)) AS SizeInGB,
-    SUM(CASE WHEN type_desc = 'ROWS' THEN 1 ELSE 0 END) AS DataFilesTotal,
-    SUM(CASE WHEN type_desc = 'LOG' THEN 1 ELSE 0 END) AS LogFilesTotal
-FROM tempdb.sys.database_files
-GROUP BY database_id;
+Short Description
+
+Synchronize SQL Logins Across All 4 HADR Nodes as per Vendor Recommendation
+
+Description
+
+The application vendor has recommended synchronizing all SQL Server logins across the four HADR (Always On Availability Group) nodes to ensure consistency of security principals and prevent authentication issues during failover or DR scenarios.
+
+Currently, login synchronization needs to be validated and aligned across all participating replicas. The activity includes identifying missing logins, SID mismatches, server role discrepancies, and ensuring all application and support accounts exist with identical SIDs and permissions on every HADR node.
+
+Scope:
+
+Review SQL logins on all 4 HADR nodes.
+Synchronize missing logins and SIDs.
+Validate server role memberships and permissions.
+Confirm successful login synchronization across all replicas.
+Symptom
+Vendor identified login inconsistencies across HADR replicas.
+Potential login failures after AG failover.
+Orphaned users or SID mismatches may occur between replicas.
+Applications may experience authentication or connectivity issues when connected to a failover node.
+Vendor has classified this activity as a priority and recommends immediate remediation.
+Additional Notes
+Vendor Recommendation: Synchronize SQL logins across all four HADR nodes.
+Priority: High.
+Business Impact: Authentication failures and application outages may occur during failover events if logins are not synchronized.
+Expected Outcome: All SQL logins, SIDs, and server-level permissions remain consistent across all AG replicas.
