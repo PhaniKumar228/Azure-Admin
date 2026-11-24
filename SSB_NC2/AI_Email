@@ -1,1 +1,23 @@
-Hi, I have multiple items on my plate at the moment and started work a bit early today. Could you please involve Nancy or Sabina to help with this activity? Their support would be appreciated while I manage the other priorities. Thanks.
+Short Description
+
+Urgent Change Request - Increase TempDB Data Files from 8 to 20 as per Vendor Recommendation
+
+Description
+
+The application vendor has reviewed the SQL Server performance and recommended increasing the number of TempDB data files from the current 8 files to 20 files on the server. This change has been identified as a priority requirement to improve TempDB workload distribution and prevent potential performance bottlenecks related to TempDB contention.
+
+The change will involve adding additional TempDB data files, aligning file sizes and autogrowth settings, and validating TempDB configuration after implementation. A SQL Server service restart may be required for the changes to take full effect.
+
+Current Configuration: 8 TempDB data files
+ Required Configuration: 20 TempDB data files
+
+Symptom
+Vendor identified insufficient TempDB data files for the current workload.
+Potential TempDB allocation/contention issues may impact application performance.
+Recommendation marked as high priority by the vendor and requires immediate implementation to avoid performance degradation.
+TempDB configuration is currently below vendor-recommended standards for this environment.
+Additional Notes
+Vendor Recommendation: Increase TempDB files from 8 to 20.
+Priority: High / Urgent.
+Business Impact: Potential application and database performance degradation if not addressed promptly.
+Implementation Window: Earliest available maintenance window recommended.
