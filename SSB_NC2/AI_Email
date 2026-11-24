@@ -1,1 +1,14 @@
-TempDB file configuration has been successfully updated as per vendor recommendation. Additional TempDB data files were created, and file sizes and autogrowth settings were verified to ensure consistency across the SQL Server instance(s). Post-change validation was completed successfully, and TempDB is functioning as expected with no issues observed. The activity has been completed successfully and the incident can be closed.
+Subject: TempDB File Addition Completed – Validation Request
+
+Hi Team,
+
+The TempDB file addition activity has been completed successfully as per the recommendation.
+
+Could you please perform application validation/testing from your end and let us know if everything is functioning as expected?
+
+If you encounter any issues or require any additional assistance, please feel free to reach out.
+
+Thank you.
+
+Regards,
+ DBA Team
