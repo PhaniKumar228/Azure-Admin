@@ -1,1 +1,14 @@
-I reviewed the RITM. It was originally opened on the 9th, and we came to know on the 29th that the wrong item had been used. Let me correct it and provide an update.
+Please perform the following activities:
+
+Refresh the AdviseRMS database from source server GCDUWVC1480,1733 to target server USE10WVC0098,1733 using the latest available backup.
+
+Source Server: GCDUWVC1480,1733
+ Source Database: AdviseRMS
+
+Target Server: USE10WVC0098,1733
+ Target Database: AdviseRMS
+
+Grant Read-Only permissions to account CORP\fccrbuatw on the following databases:
+AdviseFormPF
+AdviseRMS
+Ais_regrep
