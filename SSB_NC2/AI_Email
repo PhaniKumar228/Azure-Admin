@@ -1,35 +1,6 @@
-Subject: Azure SQL PROD Knowledge Transfer (KT) Session
-
-Meeting Objective:
- Provide a walkthrough of the Azure SQL Production environment, operational procedures, and support responsibilities to enable the team to effectively manage and support the platform.
-
-Agenda:
-
-Azure SQL Production Environment Overview
-Architecture and High Availability Configuration
-Connectivity and Access Management
-SSMS Connectivity
-Entra ID Authentication
-Service Principal Authentication
-Backup and Restore Process
-Automated Backups
-Point-in-Time Restore
-Long-Term Retention (LTR)
-Monitoring and Health Checks
-Azure Portal Monitoring
-Alerts and Metrics
-Performance Monitoring
-User and Permission Management
-Entra Groups
-SQL Logins and Roles
-Sysadmin Access Process
-Standard DBA Operational Activities
-Troubleshooting Common Issues
-Connectivity Issues
-Authentication Failures
-Performance Issues
-Incident Management and Escalation Process
-Q&A Session
-
-Expected Outcome:
- Attendees will gain an understanding of Azure SQL PROD architecture, administrative processes, backup and recovery procedures, monitoring practices, and day-to-day DBA support activities.
+Created the Linked Server successfully.
+Application team needs to map and test the application account.
+Awaiting confirmation on the account to be used on both the source and target SQL Servers.
+Access to the source SQL Server has been verified:
+USE1DWVC0010.CORP.STATESTR.COM.
+Further testing will be performed once account details are confirmed.
