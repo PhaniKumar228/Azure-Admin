@@ -1,14 +1,35 @@
-Subject: TempDB File Addition Completed – Validation Request
+Subject: Azure SQL PROD Knowledge Transfer (KT) Session
 
-Hi Team,
+Meeting Objective:
+ Provide a walkthrough of the Azure SQL Production environment, operational procedures, and support responsibilities to enable the team to effectively manage and support the platform.
 
-The TempDB file addition activity has been completed successfully as per the recommendation.
+Agenda:
 
-Could you please perform application validation/testing from your end and let us know if everything is functioning as expected?
+Azure SQL Production Environment Overview
+Architecture and High Availability Configuration
+Connectivity and Access Management
+SSMS Connectivity
+Entra ID Authentication
+Service Principal Authentication
+Backup and Restore Process
+Automated Backups
+Point-in-Time Restore
+Long-Term Retention (LTR)
+Monitoring and Health Checks
+Azure Portal Monitoring
+Alerts and Metrics
+Performance Monitoring
+User and Permission Management
+Entra Groups
+SQL Logins and Roles
+Sysadmin Access Process
+Standard DBA Operational Activities
+Troubleshooting Common Issues
+Connectivity Issues
+Authentication Failures
+Performance Issues
+Incident Management and Escalation Process
+Q&A Session
 
-If you encounter any issues or require any additional assistance, please feel free to reach out.
-
-Thank you.
-
-Regards,
- DBA Team
+Expected Outcome:
+ Attendees will gain an understanding of Azure SQL PROD architecture, administrative processes, backup and recovery procedures, monitoring practices, and day-to-day DBA support activities.
