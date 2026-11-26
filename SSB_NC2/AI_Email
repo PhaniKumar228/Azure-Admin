@@ -1,14 +1,13 @@
-Please perform the following activities:
+Subject: Request to Update CI Status in CMDB – RITM6329878
 
-Refresh the AdviseRMS database from source server GCDUWVC1480,1733 to target server USE10WVC0098,1733 using the latest available backup.
+Hi CMDB Team,
 
-Source Server: GCDUWVC1480,1733
- Source Database: AdviseRMS
+We have submitted RITM6329878 to update the status of CI USE1PWVC0205 to Installed – Registered in CMDB.
 
-Target Server: USE10WVC0098,1733
- Target Database: AdviseRMS
+Could you please review the request and let us know if any additional information is required from our side?
 
-Grant Read-Only permissions to account CORP\fccrbuatw on the following databases:
-AdviseFormPF
-AdviseRMS
-Ais_regrep
+Thank you for your assistance.
+
+Regards,
+ Phanikumar Bellamkonda
+ DBA Team
