@@ -1,13 +1,9 @@
-We have completed the below activities:
+Subject: Azure SQL MI KT Sessions Completed
 
-✅ Refreshed the AdviseRMS database from source server GCDUWVC1480,1733 to target server USE10WVC0098,1733 using the latest available backup.
+Hi Team,
 
-✅ Granted Read-Only access to account CORP\fccrbuatw on the following databases:
+The Azure SQL MI KT sessions for both UAT and PROD environments have been completed. We have covered all DBA-related activities, administration tasks, monitoring, backup and restore processes, security, and operational procedures.
 
-AdviseFormPF
-AdviseRMS
-Ais_regrep
+If there are any questions or clarifications required, please reply to this email. We will schedule a final wrap-up call on Monday to address any outstanding items and formally close the KT sessions.
 
-✅ Post-refresh validation and comparison checks were completed successfully. Comparison report screenshots are attached for reference.
-
-Please proceed with validation and let us know if any additional assistance is required.
+Thanks, Phani Kumar
